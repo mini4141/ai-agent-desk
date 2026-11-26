@@ -2,6 +2,7 @@ import { createConsumer, type Subscription } from "@rails/actioncable";
 import { decodeSample, encodeSample } from "./mulaw";
 
 const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+if (import.meta.env.VITE_API_URL === "same-origin") $<HTMLInputElement>("api").value = window.location.origin;
 const log = (text: string) => {
   const li = document.createElement("li");
   li.textContent = text;

@@ -1,0 +1,49 @@
+name: Deploy
+
+# Automated deployment to AWS through GitHub OIDC (no stored keys). The role is created by infra/github-oidc.
+# Builds images, pushes to ECR, rolls ECS services (rolling deploy, deployment circuit breaker + automatic rollback), then smoke-tests.
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: ap-southeast-2
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: pnpm/action-setup@v4
+        with: { package_json_file: web/package.json }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: pnpm, cache-dependency-path: web/pnpm-lock.yaml }
+      - id: ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      - name: Build and push images
+        env:
+          REGISTRY: ${{ steps.ecr.outputs.registry }}
+          TAG: ${{ github.sha }}
+        run: |
+          pnpm --dir web install --frozen-lockfile
+          pnpm --dir web build:widget
+          docker build -t "$REGISTRY/ai-agent-desk/rails:$TAG" .
+          docker build -t "$REGISTRY/ai-agent-desk/help-center:$TAG" web/help-center
+          docker build -t "$REGISTRY/ai-agent-desk/company-backend:$TAG" -f mocks/company-backend/Dockerfile mocks
+          for r in rails help-center company-backend; do docker push "$REGISTRY/ai-agent-desk/$r:$TAG"; done
+      - name: Rolling deploy (circuit breaker rolls back on failure)
+        run: scripts/ecs-deploy-image.sh "${{ github.sha }}"
+      - name: Smoke test
+        run: |
+          ALB=$(aws elbv2 describe-load-balancers --names ai-agent-desk --query 'LoadBalancers[0].DNSName' --output text)
+          curl -fsS "http://$ALB/up"
+          node scripts/smoke-chat.mjs "http://$ALB" pk_demo_mirai "返品はできますか？"

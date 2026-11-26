@@ -82,3 +82,5 @@ jobs:
       - run: terraform -chdir=infra fmt -check -recursive
       - run: terraform -chdir=infra init -backend=false
       - run: terraform -chdir=infra validate
+      - run: terraform -chdir=infra/github-oidc init -backend=false
+      - run: terraform -chdir=infra/github-oidc validate

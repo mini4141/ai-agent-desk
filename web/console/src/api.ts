@@ -1,4 +1,6 @@
-export const API_URL: string = import.meta.env.VITE_API_URL ?? "http://localhost:3000";
+// VITE_API_URL=same-origin: the console is served by CloudFront, which also routes /api and /cable to the ALB.
+const configured: string | undefined = import.meta.env.VITE_API_URL;
+export const API_URL: string = configured === "same-origin" ? window.location.origin : (configured ?? "http://localhost:3000");
 
 export class ApiError extends Error {
   constructor(public status: number, message: string) {

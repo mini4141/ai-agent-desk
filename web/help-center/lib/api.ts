@@ -1,7 +1,8 @@
 // Server-side data access: the help center renders knowledge articles from the Rails public API.
 export const API_URL = process.env.API_URL ?? "http://localhost:3000";
-export const PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
-export const OTLP_URL = process.env.NEXT_PUBLIC_OTLP_URL;
+// Read at request time (pages are dynamic), so one image works locally and in AWS.
+export const PUBLIC_API_URL = process.env.PUBLIC_API_URL ?? process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
+export const OTLP_URL = process.env.PUBLIC_OTLP_URL ?? process.env.NEXT_PUBLIC_OTLP_URL;
 
 export interface CompanyInfo { name: string; slug: string; locale: "ja" | "en"; public_key: string }
 export interface ArticleSummary { id: number; title: string; excerpt: string }
