@@ -8,8 +8,6 @@ Rails.application.configure do
   config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0"), namespace: "cache" }
   config.active_support.deprecation = :log
   config.active_record.migration_error = :page_load
-  config.active_record.verbose_query_logs = true
-  config.active_record.query_log_tags_enabled = true
   # Database performance guard-rails (docs/db-performance.md): N+1 patterns raise in development.
   config.active_record.strict_loading_by_default = true
   config.active_record.strict_loading_mode = :n_plus_one_only

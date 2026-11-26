@@ -11,7 +11,7 @@ class Conversation < ApplicationRecord
     "conversations.last_message_at DESC NULLS LAST"
   )
 
-  scope :inbox, -> { where.not(status: "resolved").order(PRIORITY_SQL) }
+  scope :inbox, -> { where(status: %w[waiting_human human ai]).order(PRIORITY_SQL) }
 
   after_commit :notify_changes
 

@@ -13,11 +13,11 @@ class VoiceWebAdapter < ChannelAdapter
 
   def on_token(run_id, text)
     super
-    @run_id = run_id
     @splitter.push(text).each { |sentence| speak(sentence) }
   end
 
   def finish
+    super
     return if @finished
 
     @finished = true

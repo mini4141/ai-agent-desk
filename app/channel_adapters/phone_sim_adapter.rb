@@ -9,7 +9,7 @@ class PhoneSimAdapter < ChannelAdapter
   def initialize(conversation)
     super
     @splitter = SentenceSplitter.new
-    @stream_sid = "MZ#{@conversation.id.to_s.rjust(10, '0')}"
+    @stream_sid = "MZ#{conversation.id.to_s.rjust(10, '0')}"
     @finished = false
     @first_audio_at = nil
   end
@@ -22,6 +22,7 @@ class PhoneSimAdapter < ChannelAdapter
   end
 
   def finish
+    super
     return if @finished
 
     @finished = true
@@ -43,12 +44,12 @@ class PhoneSimAdapter < ChannelAdapter
     ulaw.each_slice(FRAME_BYTES) do |frame|
       return if Rails.cache.read("phone-cancel:#{@conversation.id}")
 
-      ConversationChannel.broadcast_to(@conversation, {
+      ActionCable.server.broadcast(@stream, {
         type: "media", event: "media", streamSid: @stream_sid,
         media: { track: "outbound", payload: Base64.strict_encode64(frame.pack("C*")) }
       })
       sleep(0.08) # pace slower than real time so a barge-in can still interrupt
     end
-    ConversationChannel.broadcast_to(@conversation, { type: "mark", event: "mark", streamSid: @stream_sid, mark: { name: "sentence_done" } })
+    ActionCable.server.broadcast(@stream, { type: "mark", event: "mark", streamSid: @stream_sid, mark: { name: "sentence_done" } })
   end
 end

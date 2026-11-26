@@ -2,6 +2,9 @@ class Rack::Attack
   Rack::Attack.cache.store = Rails.cache
   self.enabled = !Rails.env.test?
 
+  # Load tests (k6) present a shared token so they are not throttled.
+  safelist("load-test") { |req| ENV["LOAD_TEST_TOKEN"].present? && req.get_header("HTTP_X_LOAD_TEST") == ENV["LOAD_TEST_TOKEN"] }
+
   # Per-IP limits
   throttle("widget/ip", limit: 120, period: 1.minute) { |req| req.ip if req.path.start_with?("/widget/") }
   throttle("login/ip", limit: 10, period: 1.minute) { |req| req.ip if req.path == "/api/v1/session" && req.post? }
