@@ -29,7 +29,8 @@ test("voice: hold-to-talk (fake mic) gets a spoken reply", async ({ page }) => {
   await holdToTalk(page);
   await expect(page.getByTestId("bubble-customer").last()).toContainText(HEARD, { timeout: 30_000 });
   await expect(page.getByTestId("bubble-ai").last()).toContainText(ANSWER, { timeout: 30_000 });
-  await expect(page.getByTestId("spoken")).toContainText(ANSWER, { timeout: 30_000 });
+  // `spoken` shows the latest sentence; data-all accumulates everything spoken this turn
+  await expect(page.getByTestId("spoken")).toHaveAttribute("data-all", new RegExp(ANSWER), { timeout: 30_000 });
 });
 
 test("avatar: speaks the answer and the interview fields are stored on the conversation", async ({ page }) => {
@@ -38,7 +39,8 @@ test("avatar: speaks the answer and the interview fields are stored on the conve
   await expect(page.getByTestId("avatar")).toBeVisible();
   await expect(page.getByTestId("widget").locator(".dot.on")).toBeVisible();
   await holdToTalk(page);
-  await expect(page.getByTestId("spoken")).toContainText(ANSWER, { timeout: 30_000 });
+  // `spoken` shows the latest sentence; data-all accumulates everything spoken this turn
+  await expect(page.getByTestId("spoken")).toHaveAttribute("data-all", new RegExp(ANSWER), { timeout: 30_000 });
 
   // interview mode: scripted 3-question intake
   await page.getByTestId("interview-toggle").click();

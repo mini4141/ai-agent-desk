@@ -101,7 +101,7 @@ export function Widget({ api, publicKey, channels, open: initialOpen }: WidgetOp
           >
             {recording ? tr.listening : speaking ? tr.speaking : tr.hold}
           </button>
-          <div className="spoken" data-testid="spoken" data-count={spoken.length}>{spoken.at(-1)}</div>
+          <div className="spoken" data-testid="spoken" data-count={spoken.length} data-all={spoken.join("")}>{spoken.at(-1)}</div>
         </div>
       )}
 

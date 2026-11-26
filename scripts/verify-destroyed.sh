@@ -29,9 +29,10 @@ check "VPCs"               "$(aws ec2 describe-vpcs --filters Name=tag:Project,V
 check "NAT gateways"       "$(aws ec2 describe-nat-gateways --filter Name=state,Values=available,pending --query "NatGateways[?Tags[?Key=='Project'&&Value=='ai-agent-desk']].NatGatewayId" --output text 2>/dev/null)"
 check "CloudWatch log groups" "$(aws logs describe-log-groups --log-group-name-prefix /ecs/ai-agent-desk --query 'logGroups[].logGroupName' --output text 2>/dev/null)"
 check "CloudWatch alarms"  "$(aws cloudwatch describe-alarms --alarm-name-prefix ai-agent-desk --query 'MetricAlarms[].AlarmName' --output text 2>/dev/null)"
-if [ ! -f infra/.oidc-created ]; then
-  echo "NOTE  OIDC provider was not created by this project (shared account-wide provider is left alone)"
-fi
+# The account-wide GitHub OIDC provider: this project removes it only if it created it (the account had none when the
+# project started, so a leftover provider here would be ours).
+oidc=$(aws iam list-open-id-connect-providers --query "OpenIDConnectProviderList[?contains(Arn,'token.actions.githubusercontent.com')].Arn" --output text 2>/dev/null)
+if [ -z "$oidc" ] || [ "$oidc" = "None" ]; then echo "OK    GitHub OIDC provider: none"; else echo "INFO  GitHub OIDC provider present (shared account-wide; kept if another project created it): $oidc"; fi
 
 echo; echo "# resources still tagged Project=ai-agent-desk (tagging API; can lag a few minutes)"
 tagged=$(aws resourcegroupstaggingapi get-resources --tag-filters Key=Project,Values=ai-agent-desk --query 'ResourceTagMappingList[].ResourceARN' --output text 2>/dev/null)

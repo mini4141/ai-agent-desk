@@ -1,0 +1,50 @@
+# verify-destroyed  2026-11-26T17:08:49Z  region=ap-southeast-2
+OK    ECS cluster: none
+OK    Load balancers: none
+OK    Target groups: none
+OK    RDS instances: none
+OK    ElastiCache: none
+OK    CloudFront: none
+OK    S3 buckets: none
+OK    ECR repositories: none
+OK    Secrets Manager: none
+OK    IAM roles: none
+OK    VPCs: none
+OK    NAT gateways: none
+OK    CloudWatch log groups: none
+OK    CloudWatch alarms: none
+OK    GitHub OIDC provider: none
+
+# resources still tagged Project=ai-agent-desk (tagging API; can lag a few minutes)
+INFO  tagged: arn:aws:ec2:ap-southeast-2:<ACCOUNT_ID>:security-group-rule/sgr-07c4a9d0d19e50d68
+INFO  tagged: arn:aws:ec2:ap-southeast-2:<ACCOUNT_ID>:security-group-rule/sgr-0683bb4d2fd62db4a
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:service/ai-agent-desk/ai-agent-desk-company-backend
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-help-center:1
+INFO  tagged: arn:aws:ec2:ap-southeast-2:<ACCOUNT_ID>:security-group-rule/sgr-030568cd2b9677eaa
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-worker:2
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:service/ai-agent-desk/ai-agent-desk-worker
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-worker:7
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-web:7
+INFO  tagged: arn:aws:ec2:ap-southeast-2:<ACCOUNT_ID>:security-group-rule/sgr-0243bfa73cbe1e20f
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:service/ai-agent-desk/ai-agent-desk-help-center
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-worker:1
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-company-backend:3
+INFO  tagged: arn:aws:ec2:ap-southeast-2:<ACCOUNT_ID>:security-group-rule/sgr-09233c5f24c37d592
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:cluster/ai-agent-desk
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-help-center:4
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-help-center:3
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-web:1
+INFO  tagged: arn:aws:ec2:ap-southeast-2:<ACCOUNT_ID>:security-group-rule/sgr-0066ab93f5134bb0e
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-help-center:2
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-worker:4
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-company-backend:2
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-company-backend:1
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-company-backend:4
+INFO  tagged: arn:aws:ec2:ap-southeast-2:<ACCOUNT_ID>:security-group-rule/sgr-09c63329a3a3a979e
+INFO  tagged: arn:aws:ec2:ap-southeast-2:<ACCOUNT_ID>:security-group-rule/sgr-00d21d495d525965e
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:service/ai-agent-desk/ai-agent-desk-web
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-web:2
+INFO  tagged: arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-web:4
+      (confirmed above by direct describe calls; tagged entries for deleted resources are eventual-consistency leftovers)
+
+RESULT: nothing billable remains
