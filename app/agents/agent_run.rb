@@ -134,7 +134,8 @@ class AgentRun
     @timings["end_to_end_ms"] ||= @timings["tts_first_audio_ms"]
     @timings["total_ms"] = ms_since(@t0)
     @timings.each { |stage, v| Telemetry.timing(stage, v, @conversation.channel) if v.is_a?(Numeric) }
-    @conversation.messages.create!(role: "ai", content: answer, citations:, timings: @timings, metadata: { "run_id" => @run_id })
+    @conversation.messages.create!(role: "ai", content: answer, citations:, timings: @timings,
+                                   metadata: { "run_id" => @run_id, "model" => (Llm.provider.last_model if Llm.provider.respond_to?(:last_model)) }.compact)
   end
 
   def escalate(reason, text)

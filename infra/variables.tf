@@ -29,6 +29,11 @@ variable "bedrock_model_id" {
   default = "au.anthropic.claude-haiku-4-5-20251001-v1:0"
 }
 
+variable "bedrock_fallback_model_id" {
+  type    = string
+  default = "apac.amazon.nova-lite-v1:0"
+}
+
 variable "bedrock_embed_model_id" {
   type    = string
   default = "amazon.titan-embed-text-v2:0"

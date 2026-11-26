@@ -24,6 +24,7 @@ locals {
     { name = "EMBEDDING_PROVIDER", value = "bedrock" },
     { name = "AWS_REGION", value = var.region },
     { name = "BEDROCK_MODEL_ID", value = var.bedrock_model_id },
+    { name = "BEDROCK_FALLBACK_MODEL_ID", value = var.bedrock_fallback_model_id },
     { name = "BEDROCK_EMBED_MODEL_ID", value = var.bedrock_embed_model_id },
     { name = "S3_BUCKET", value = aws_s3_bucket.uploads.bucket },
     { name = "COMPANY_BACKEND_URL", value = local.alb_url },
