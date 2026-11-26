@@ -9,6 +9,7 @@ echo "waiting for Rails /up ..."
 for _ in $(seq 1 90); do curl -fs localhost:3000/up >/dev/null && break; sleep 2; done
 
 "$ROOT/scripts/seed.sh"
+node scripts/warmup.mjs http://localhost:3000 pk_demo_mirai || true
 
 (cd web && pnpm install --frozen-lockfile 2>/dev/null || pnpm install)
 pnpm --dir web build:widget

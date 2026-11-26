@@ -14,6 +14,7 @@ export default defineConfig({
   timeout: 60_000,
   expect: { timeout: 10_000 },
   workers: 1, // tests share one seeded database
+  retries: process.env.CI ? 1 : 0,
   reporter: [
     ["list"],
     ["html", { outputFolder: `${reportDir}/playwright-report`, open: "never" }],
