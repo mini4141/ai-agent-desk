@@ -6,7 +6,7 @@ Rails.application.configure do
   config.consider_all_requests_local = false
   config.public_file_server.enabled = true # serves the embeddable widget bundle (public/widget.js)
   config.cache_store = :redis_cache_store, { url: ENV.fetch("REDIS_URL", "redis://localhost:6379/0"), namespace: "cache" }
-  config.log_tags = [:request_id]
+  config.logger = ActiveSupport::TaggedLogging.logger($stdout) # CloudWatch reads container stdout
   $stdout.sync = true # container logs must not sit in a buffer
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
   config.silence_healthcheck_path = "/up"

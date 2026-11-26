@@ -7,11 +7,15 @@ Rails.application.configure do
   config.log_level = ENV["RAILS_LOG_LEVEL"] || (Rails.env.test? ? :warn : :info)
 
   unless Rails.env.test?
-    config.logger = ActiveSupport::Logger.new($stdout)
-    # Customer PII (emails, phone numbers) never reaches logs.
-    config.logger.formatter = lambda do |sev, time, _prog, msg|
-      line = { level: sev, time: time.utc.iso8601(3), msg: PiiRedactor.redact(msg.is_a?(String) ? msg : msg.inspect) }
-      "#{line.to_json}\n"
+    # Structured JSON lines; customer PII (emails, phone numbers) never reaches logs.
+    config.after_initialize do
+      formatter = lambda do |sev, time, _prog, msg|
+        line = { level: sev, time: time.utc.iso8601(3), msg: PiiRedactor.redact(msg.is_a?(String) ? msg : msg.inspect) }
+        "#{line.to_json}
+"
+      end
+      formatter.extend(ActiveSupport::TaggedLogging::Formatter) # keep Rails' tagged-logging contract
+      Rails.logger.formatter = formatter
     end
   end
 end
