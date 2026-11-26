@@ -1,51 +1,17 @@
-<testsuites id="" name="" tests="10" failures="3" skipped="4" errors="0" time="150.182524">
-<testsuite name="chat-handoff.spec.ts" timestamp="2026-11-26T16:05:18.612Z" hostname="chromium" tests="1" failures="0" skipped="0" time="34.654" errors="0">
-<testcase name="web chat answers, escalates, operator takes over, resolves, and metrics update" classname="chat-handoff.spec.ts" time="34.654">
+<testsuites id="" name="" tests="10" failures="1" skipped="4" errors="0" time="119.063078">
+<testsuite name="chat-handoff.spec.ts" timestamp="2026-11-26T16:19:30.825Z" hostname="chromium" tests="1" failures="0" skipped="0" time="35.027" errors="0">
+<testcase name="web chat answers, escalates, operator takes over, resolves, and metrics update" classname="chat-handoff.spec.ts" time="35.027">
 </testcase>
 </testsuite>
-<testsuite name="phone-help.spec.ts" timestamp="2026-11-26T16:05:18.612Z" hostname="chromium" tests="3" failures="1" skipped="0" time="42.505" errors="0">
-<testcase name="phone simulator: a call completes one question and answer over mu-law frames" classname="phone-help.spec.ts" time="39.534">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\..\..\..\web\e2e\test-results\phone-help-phone-simulator-dfba7-d-answer-over-mu-law-frames-chromium\error-context.md]]
-]]>
-</system-out>
-<failure message="expect(locator).toContainText(expected) failed" type="expect.toContainText">
-<![CDATA[  [chromium] › phone-help.spec.ts:5:1 › phone simulator: a call completes one question and answer over mu-law frames 
-
-    Error: expect(locator).toContainText(expected) failed
-
-    Locator: getByTestId('log')
-    Expected substring: "agent:"
-    Received string:    "call connected (conversation 446)caller finished speakingcaller: 返品はできますか？ 返品はできますか？"
-    Timeout: 30000ms
-
-    Call log:
-      - Expect "toContainText" getByTestId('log') with timeout 30000ms
-      - waiting for getByTestId('log')
-        62 × locator resolved to <ul id="log" data-testid="log">…</ul>
-           - unexpected value "call connected (conversation 446)caller finished speakingcaller: 返品はできますか？ 返品はできますか？"
-
-
-      17 |
-      18 |   await expect(page.getByTestId("log")).toContainText(new RegExp(`caller: .*(${process.env.VOICE_HEARD ?? "注文|1023"})`), { timeout: 30_000 });
-    > 19 |   await expect(page.getByTestId("log")).toContainText("agent:", { timeout: 30_000 });
-         |                                         ^
-      20 |   await expect(page.getByTestId("log")).toContainText(process.env.VOICE_EXPECT ?? "出荷済み");
-      21 |
-      22 |   const token = await apiToken("owner@mirai.example");
-        at C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\phone-help.spec.ts:19:41
-
-    Error Context: ..\test-results\phone-help-phone-simulator-dfba7-d-answer-over-mu-law-frames-chromium\error-context.md
-]]>
-</failure>
+<testsuite name="phone-help.spec.ts" timestamp="2026-11-26T16:19:30.825Z" hostname="chromium" tests="3" failures="0" skipped="0" time="14.85" errors="0">
+<testcase name="phone simulator: a call completes one question and answer over mu-law frames" classname="phone-help.spec.ts" time="12.143">
 </testcase>
-<testcase name="help center is server-rendered: article text is in the HTML without JavaScript" classname="phone-help.spec.ts" time="1.105">
+<testcase name="help center is server-rendered: article text is in the HTML without JavaScript" classname="phone-help.spec.ts" time="0.872">
 </testcase>
-<testcase name="greeting_v2 assignment is sticky per visitor" classname="phone-help.spec.ts" time="1.866">
+<testcase name="greeting_v2 assignment is sticky per visitor" classname="phone-help.spec.ts" time="1.835">
 </testcase>
 </testsuite>
-<testsuite name="proof.spec.ts" timestamp="2026-11-26T16:05:18.612Z" hostname="chromium" tests="4" failures="0" skipped="4" time="0" errors="0">
+<testsuite name="proof.spec.ts" timestamp="2026-11-26T16:19:30.825Z" hostname="chromium" tests="4" failures="0" skipped="4" time="0" errors="0">
 <testcase name="chat, tool call and citation" classname="proof.spec.ts">
 <properties>
 <property name="serial" value="">
@@ -87,8 +53,8 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="voice-avatar.spec.ts" timestamp="2026-11-26T16:05:18.612Z" hostname="chromium" tests="2" failures="2" skipped="0" time="68.458" errors="0">
-<testcase name="voice: hold-to-talk (fake mic) gets a spoken reply" classname="voice-avatar.spec.ts" time="43.721">
+<testsuite name="voice-avatar.spec.ts" timestamp="2026-11-26T16:19:30.825Z" hostname="chromium" tests="2" failures="1" skipped="0" time="66.553" errors="0">
+<testcase name="voice: hold-to-talk (fake mic) gets a spoken reply" classname="voice-avatar.spec.ts" time="43.359">
 <system-out>
 <![CDATA[
 [[ATTACHMENT|..\..\..\..\web\e2e\test-results\voice-avatar-voice-hold-to-talk-fake-mic-gets-a-spoken-reply-chromium\error-context.md]]
@@ -124,32 +90,7 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="avatar: speaks the answer and the interview fields are stored on the conversation" classname="voice-avatar.spec.ts" time="24.737">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\..\..\..\web\e2e\test-results\voice-avatar-avatar-speaks-8afd2--stored-on-the-conversation-chromium\error-context.md]]
-]]>
-</system-out>
-<failure message="expect(received).toBe(expected) // Object.is equality" type="expect.toBe">
-<![CDATA[  [chromium] › voice-avatar.spec.ts:34:1 › avatar: speaks the answer and the interview fields are stored on the conversation 
-
-    Error: expect(received).toBe(expected) // Object.is equality
-
-    Expected: true
-    Received: undefined
-
-      56 |   const avatar = conversations.find((c) => c.channel === "avatar");
-      57 |   const detail = await apiGet<{ intake: { completed: boolean; answers: Record<string, string> } }>(`/api/v1/conversations/${avatar!.id}`, token);
-    > 58 |   expect(detail.intake.completed).toBe(true);
-         |                                   ^
-      59 |   expect(detail.intake.answers.product).toBe("ワイヤレスイヤホン");
-      60 | });
-      61 |
-        at C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\voice-avatar.spec.ts:58:35
-
-    Error Context: ..\test-results\voice-avatar-avatar-speaks-8afd2--stored-on-the-conversation-chromium\error-context.md
-]]>
-</failure>
+<testcase name="avatar: speaks the answer and the interview fields are stored on the conversation" classname="voice-avatar.spec.ts" time="23.194">
 </testcase>
 </testsuite>
 </testsuites>

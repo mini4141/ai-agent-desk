@@ -7,6 +7,7 @@ const ANSWER = process.env.VOICE_EXPECT ?? "出荷済み";
 
 async function holdToTalk(page: import("@playwright/test").Page, ms = Number(process.env.HOLD_MS ?? 1200)) {
   const ptt = page.getByTestId("ptt");
+  await expect(ptt).toBeEnabled({ timeout: 20_000 }); // the VoiceChannel subscription is confirmed
   const box = (await ptt.boundingBox())!;
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();

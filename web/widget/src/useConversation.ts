@@ -43,6 +43,7 @@ export function useConversation({ api, publicKey, channel, mode, onSpeak }: Opti
   const [connected, setConnected] = useState(false);
   const [partial, setPartial] = useState("");
   const [csatDone, setCsatDone] = useState(false);
+  const [voiceReady, setVoiceReady] = useState(false);
   const conv = useRef<Subscription | null>(null);
   const voice = useRef<Subscription | null>(null);
   const speakRef = useRef(onSpeak);
@@ -53,6 +54,7 @@ export function useConversation({ api, publicKey, channel, mode, onSpeak }: Opti
     let cancelled = false;
     setSession(null);
     setConnected(false);
+    setVoiceReady(false);
     setMessages([]);
     setStatus("ai");
     setCsatDone(false);
@@ -77,7 +79,7 @@ export function useConversation({ api, publicKey, channel, mode, onSpeak }: Opti
           disconnected: () => setConnected(false),
           received: (ev: ServerEvent) => apply(ev),
         });
-        if (channel !== "web_chat") voice.current = consumer.subscriptions.create("VoiceChannel");
+        if (channel !== "web_chat") voice.current = consumer.subscriptions.create("VoiceChannel", { connected: () => setVoiceReady(true), disconnected: () => setVoiceReady(false) });
       });
 
     const apply = (ev: ServerEvent) => {
@@ -160,5 +162,5 @@ export function useConversation({ api, publicKey, channel, mode, onSpeak }: Opti
     setCsatDone(true);
   }, [api, session]);
 
-  return { session, messages, status, connected, partial, csatDone, ask, sendAudio, audioStart, audioEnd, csat };
+  return { session, messages, status, connected, voiceReady, partial, csatDone, ask, sendAudio, audioStart, audioEnd, csat };
 }

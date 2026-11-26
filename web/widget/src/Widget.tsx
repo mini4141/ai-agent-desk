@@ -96,7 +96,7 @@ export function Widget({ api, publicKey, channels, open: initialOpen }: WidgetOp
       {channel !== "web_chat" && (
         <div className="voice-bar">
           <button
-            className={`ptt ${recording ? "rec" : ""}`} data-testid="ptt"
+            className={`ptt ${recording ? "rec" : ""}`} data-testid="ptt" disabled={!convo.voiceReady}
             onPointerDown={() => void startTalking()} onPointerUp={() => void stopTalking()} onPointerLeave={() => void stopTalking()}
           >
             {recording ? tr.listening : speaking ? tr.speaking : tr.hold}

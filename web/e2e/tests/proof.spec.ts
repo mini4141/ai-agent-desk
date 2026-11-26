@@ -48,6 +48,7 @@ test("voice and avatar", async ({ page }) => {
   await page.addInitScript(() => ((window as unknown as Record<string, string>).__AGENT_DESK_STT_HINT__ = "注文 A-1023 はいつ届きますか？"));
   await openWidget(page);
   const hold = async () => {
+    await expect(page.getByTestId("ptt")).toBeEnabled({ timeout: 20_000 });
     const box = (await page.getByTestId("ptt").boundingBox())!;
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
     await page.mouse.down();
