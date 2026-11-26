@@ -51,10 +51,13 @@ test("avatar: speaks the answer and the interview fields are stored on the conve
   await ask(page, "音が出ません");
   await expect(page.getByTestId("bubble-ai").last()).toContainText("承りました");
 
+  // find the interview conversation among the newest avatar conversations
   const token = await apiToken("owner@mirai.example");
   const { conversations } = await apiGet<{ conversations: { id: number; channel: string }[] }>("/api/v1/conversations", token);
-  const avatar = conversations.find((c) => c.channel === "avatar");
-  const detail = await apiGet<{ intake: { completed: boolean; answers: Record<string, string> } }>(`/api/v1/conversations/${avatar!.id}`, token);
-  expect(detail.intake.completed).toBe(true);
-  expect(detail.intake.answers.product).toBe("ワイヤレスイヤホン");
+  const details = await Promise.all(
+    conversations.filter((c) => c.channel === "avatar").slice(0, 8)
+      .map((c) => apiGet<{ intake: { completed?: boolean; answers?: Record<string, string> } }>(`/api/v1/conversations/${c.id}`, token)),
+  );
+  const done = details.find((d) => d.intake?.completed && d.intake.answers?.product === "ワイヤレスイヤホン");
+  expect(done, "interview fields are stored on the conversation").toBeTruthy();
 });

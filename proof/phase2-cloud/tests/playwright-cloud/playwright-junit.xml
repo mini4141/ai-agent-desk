@@ -1,50 +1,10 @@
-<testsuites id="" name="" tests="10" failures="4" skipped="4" errors="0" time="160.706705">
-<testsuite name="chat-handoff.spec.ts" timestamp="2026-11-26T15:57:00.294Z" hostname="chromium" tests="1" failures="1" skipped="0" time="24.528" errors="0">
-<testcase name="web chat answers, escalates, operator takes over, resolves, and metrics update" classname="chat-handoff.spec.ts" time="24.528">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\..\..\..\web\e2e\test-results\chat-handoff-web-chat-answ-bdb5f-resolves-and-metrics-update-chromium\error-context.md]]
-]]>
-</system-out>
-<failure message="expect(locator).toContainText(expected) failed" type="expect.toContainText">
-<![CDATA[  [chromium] › chat-handoff.spec.ts:5:1 › web chat answers, escalates, operator takes over, resolves, and metrics update 
-
-    Error: expect(locator).toContainText(expected) failed
-
-    Locator: getByTestId('bubble-ai').last()
-    Expected substring: "出荷済み"
-    Received string:    "注文 A-1023 は11月28日にお届け予定です。[1]参照: [1] 配送・お届け"
-    Timeout: 10000ms
-
-    Call log:
-      - Expect "toContainText" getByTestId('bubble-ai').last() with timeout 10000ms
-      - waiting for getByTestId('bubble-ai').last()
-        - locator resolved to <div class="bubble ai" data-testid="bubble-ai">…</div>
-        - unexpected value "こんにちは！ミライ電機です。ご用件をどうぞ。"
-        - locator resolved to <div class="bubble ai" data-testid="bubble-ai">…</div>
-        - unexpected value "注"
-        - locator resolved to <div class="bubble ai" data-testid="bubble-ai">…</div>
-        - unexpected value "注文"
-        20 × locator resolved to <div class="bubble ai" data-testid="bubble-ai">…</div>
-           - unexpected value "注文 A-1023 は11月28日にお届け予定です。[1]参照: [1] 配送・お届け"
-
-
-      15 |   await ask(customer, "注文 A-1023 はいつ届きますか？");
-      16 |   await expect(customer.getByTestId("tool-chip")).toContainText("check_order_status");
-    > 17 |   await expect(customer.getByTestId("bubble-ai").last()).toContainText("出荷済み");
-         |                                                          ^
-      18 |   await expect(customer.getByTestId("citations").last()).toContainText("[1]");
-      19 |
-      20 |   // 2. customer asks for a person -> escalated, shows up in the operator inbox within 2 s
-        at C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\chat-handoff.spec.ts:17:58
-
-    Error Context: ..\test-results\chat-handoff-web-chat-answ-bdb5f-resolves-and-metrics-update-chromium\error-context.md
-]]>
-</failure>
+<testsuites id="" name="" tests="10" failures="3" skipped="4" errors="0" time="150.182524">
+<testsuite name="chat-handoff.spec.ts" timestamp="2026-11-26T16:05:18.612Z" hostname="chromium" tests="1" failures="0" skipped="0" time="34.654" errors="0">
+<testcase name="web chat answers, escalates, operator takes over, resolves, and metrics update" classname="chat-handoff.spec.ts" time="34.654">
 </testcase>
 </testsuite>
-<testsuite name="phone-help.spec.ts" timestamp="2026-11-26T15:57:00.294Z" hostname="chromium" tests="3" failures="1" skipped="0" time="44.12" errors="0">
-<testcase name="phone simulator: a call completes one question and answer over mu-law frames" classname="phone-help.spec.ts" time="41.148">
+<testsuite name="phone-help.spec.ts" timestamp="2026-11-26T16:05:18.612Z" hostname="chromium" tests="3" failures="1" skipped="0" time="42.505" errors="0">
+<testcase name="phone simulator: a call completes one question and answer over mu-law frames" classname="phone-help.spec.ts" time="39.534">
 <system-out>
 <![CDATA[
 [[ATTACHMENT|..\..\..\..\web\e2e\test-results\phone-help-phone-simulator-dfba7-d-answer-over-mu-law-frames-chromium\error-context.md]]
@@ -57,14 +17,14 @@
 
     Locator: getByTestId('log')
     Expected substring: "agent:"
-    Received string:    "call connected (conversation 431)caller finished speakingcaller: インはできますか？ 返品はでき"
+    Received string:    "call connected (conversation 446)caller finished speakingcaller: 返品はできますか？ 返品はできますか？"
     Timeout: 30000ms
 
     Call log:
       - Expect "toContainText" getByTestId('log') with timeout 30000ms
       - waiting for getByTestId('log')
         62 × locator resolved to <ul id="log" data-testid="log">…</ul>
-           - unexpected value "call connected (conversation 431)caller finished speakingcaller: インはできますか？ 返品はでき"
+           - unexpected value "call connected (conversation 446)caller finished speakingcaller: 返品はできますか？ 返品はできますか？"
 
 
       17 |
@@ -80,12 +40,12 @@
 ]]>
 </failure>
 </testcase>
-<testcase name="help center is server-rendered: article text is in the HTML without JavaScript" classname="phone-help.spec.ts" time="1.062">
+<testcase name="help center is server-rendered: article text is in the HTML without JavaScript" classname="phone-help.spec.ts" time="1.105">
 </testcase>
-<testcase name="greeting_v2 assignment is sticky per visitor" classname="phone-help.spec.ts" time="1.91">
+<testcase name="greeting_v2 assignment is sticky per visitor" classname="phone-help.spec.ts" time="1.866">
 </testcase>
 </testsuite>
-<testsuite name="proof.spec.ts" timestamp="2026-11-26T15:57:00.294Z" hostname="chromium" tests="4" failures="0" skipped="4" time="0" errors="0">
+<testsuite name="proof.spec.ts" timestamp="2026-11-26T16:05:18.612Z" hostname="chromium" tests="4" failures="0" skipped="4" time="0" errors="0">
 <testcase name="chat, tool call and citation" classname="proof.spec.ts">
 <properties>
 <property name="serial" value="">
@@ -127,8 +87,8 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="voice-avatar.spec.ts" timestamp="2026-11-26T15:57:00.294Z" hostname="chromium" tests="2" failures="2" skipped="0" time="86.374" errors="0">
-<testcase name="voice: hold-to-talk (fake mic) gets a spoken reply" classname="voice-avatar.spec.ts" time="42.673">
+<testsuite name="voice-avatar.spec.ts" timestamp="2026-11-26T16:05:18.612Z" hostname="chromium" tests="2" failures="2" skipped="0" time="68.458" errors="0">
+<testcase name="voice: hold-to-talk (fake mic) gets a spoken reply" classname="voice-avatar.spec.ts" time="43.721">
 <system-out>
 <![CDATA[
 [[ATTACHMENT|..\..\..\..\web\e2e\test-results\voice-avatar-voice-hold-to-talk-fake-mic-gets-a-spoken-reply-chromium\error-context.md]]
@@ -136,42 +96,6 @@
 </system-out>
 <failure message="expect(locator).toContainText(expected) failed" type="expect.toContainText">
 <![CDATA[  [chromium] › voice-avatar.spec.ts:24:1 › voice: hold-to-talk (fake mic) gets a spoken reply ──────
-
-    Error: expect(locator).toContainText(expected) failed
-
-    Locator: getByTestId('bubble-customer').last()
-    Expected pattern: /返品/i
-    Received string:  "Mwadiki maska. Ha"
-    Timeout: 30000ms
-
-    Call log:
-      - Expect "toContainText" getByTestId('bubble-customer').last() with timeout 30000ms
-      - waiting for getByTestId('bubble-customer').last()
-        56 × locator resolved to <div class="bubble customer" data-testid="bubble-customer">…</div>
-           - unexpected value "Mwadiki maska. Ha"
-
-
-      27 |   await expect(page.getByTestId("widget").locator(".dot.on")).toBeVisible();
-      28 |   await holdToTalk(page);
-    > 29 |   await expect(page.getByTestId("bubble-customer").last()).toContainText(HEARD, { timeout: 30_000 });
-         |                                                            ^
-      30 |   await expect(page.getByTestId("bubble-ai").last()).toContainText(ANSWER, { timeout: 30_000 });
-      31 |   await expect(page.getByTestId("spoken")).toContainText(ANSWER, { timeout: 30_000 });
-      32 | });
-        at C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\voice-avatar.spec.ts:29:60
-
-    Error Context: ..\test-results\voice-avatar-voice-hold-to-talk-fake-mic-gets-a-spoken-reply-chromium\error-context.md
-]]>
-</failure>
-</testcase>
-<testcase name="avatar: speaks the answer and the interview fields are stored on the conversation" classname="voice-avatar.spec.ts" time="43.701">
-<system-out>
-<![CDATA[
-[[ATTACHMENT|..\..\..\..\web\e2e\test-results\voice-avatar-avatar-speaks-8afd2--stored-on-the-conversation-chromium\error-context.md]]
-]]>
-</system-out>
-<failure message="expect(locator).toContainText(expected) failed" type="expect.toContainText">
-<![CDATA[  [chromium] › voice-avatar.spec.ts:34:1 › avatar: speaks the answer and the interview fields are stored on the conversation 
 
     Error: expect(locator).toContainText(expected) failed
 
@@ -187,14 +111,41 @@
            - unexpected value ""
 
 
-      38 |   await expect(page.getByTestId("widget").locator(".dot.on")).toBeVisible();
-      39 |   await holdToTalk(page);
-    > 40 |   await expect(page.getByTestId("spoken")).toContainText(ANSWER, { timeout: 30_000 });
+      29 |   await expect(page.getByTestId("bubble-customer").last()).toContainText(HEARD, { timeout: 30_000 });
+      30 |   await expect(page.getByTestId("bubble-ai").last()).toContainText(ANSWER, { timeout: 30_000 });
+    > 31 |   await expect(page.getByTestId("spoken")).toContainText(ANSWER, { timeout: 30_000 });
          |                                            ^
-      41 |
-      42 |   // interview mode: scripted 3-question intake
-      43 |   await page.getByTestId("interview-toggle").click();
-        at C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\voice-avatar.spec.ts:40:44
+      32 | });
+      33 |
+      34 | test("avatar: speaks the answer and the interview fields are stored on the conversation", async ({ page }) => {
+        at C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\voice-avatar.spec.ts:31:44
+
+    Error Context: ..\test-results\voice-avatar-voice-hold-to-talk-fake-mic-gets-a-spoken-reply-chromium\error-context.md
+]]>
+</failure>
+</testcase>
+<testcase name="avatar: speaks the answer and the interview fields are stored on the conversation" classname="voice-avatar.spec.ts" time="24.737">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\..\..\..\web\e2e\test-results\voice-avatar-avatar-speaks-8afd2--stored-on-the-conversation-chromium\error-context.md]]
+]]>
+</system-out>
+<failure message="expect(received).toBe(expected) // Object.is equality" type="expect.toBe">
+<![CDATA[  [chromium] › voice-avatar.spec.ts:34:1 › avatar: speaks the answer and the interview fields are stored on the conversation 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: undefined
+
+      56 |   const avatar = conversations.find((c) => c.channel === "avatar");
+      57 |   const detail = await apiGet<{ intake: { completed: boolean; answers: Record<string, string> } }>(`/api/v1/conversations/${avatar!.id}`, token);
+    > 58 |   expect(detail.intake.completed).toBe(true);
+         |                                   ^
+      59 |   expect(detail.intake.answers.product).toBe("ワイヤレスイヤホン");
+      60 | });
+      61 |
+        at C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\voice-avatar.spec.ts:58:35
 
     Error Context: ..\test-results\voice-avatar-avatar-speaks-8afd2--stored-on-the-conversation-chromium\error-context.md
 ]]>
