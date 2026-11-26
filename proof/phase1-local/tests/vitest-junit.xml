@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="2" failures="0" errors="0" time="0.2233449">
+    <testsuite name="src/inbox.test.tsx" timestamp="2026-11-26T14:12:34.134Z" hostname="DESKTOP-LSTSC86" tests="1" failures="0" errors="0" skipped="0" time="0.1239755">
+        <testcase classname="src/inbox.test.tsx" name="lists open conversations from the API and refreshes when Action Cable pushes an update" time="0.1192902">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/transcript.test.tsx" timestamp="2026-11-26T14:12:34.136Z" hostname="DESKTOP-LSTSC86" tests="1" failures="0" errors="0" skipped="0" time="0.0993694">
+        <testcase classname="src/transcript.test.tsx" name="shows streamed AI tokens live, then the final message and the AI draft" time="0.0931783">
+        </testcase>
+    </testsuite>
+</testsuites>

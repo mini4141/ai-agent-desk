@@ -46,6 +46,7 @@ export function useConversation({ api, publicKey, channel, mode, onSpeak }: Opti
     let consumer: ReturnType<typeof createConsumer> | undefined;
     let cancelled = false;
     setSession(null);
+    setConnected(false);
     setMessages([]);
     setStatus("ai");
     setCsatDone(false);

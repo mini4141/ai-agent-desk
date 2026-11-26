@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  rails:
+    name: Rails (RSpec)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:0.8.1-pg17
+        env: { POSTGRES_PASSWORD: postgres }
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 5s --health-retries 10
+      redis:
+        image: redis:7.4-alpine
+        ports: ["6379:6379"]
+    env:
+      RAILS_ENV: test
+      CI: "true"
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/agent_desk_test
+      REDIS_URL: redis://localhost:6379/0
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with: { ruby-version: "3.4", bundler-cache: true }
+      - run: bin/rails db:create db:schema:load
+      - run: bundle exec rspec --format progress --format RspecJunitFormatter --out tmp/rspec-junit.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: rspec-junit, path: tmp/rspec-junit.xml }
+
+  web:
+    name: Web (typecheck, Vitest, builds)
+    runs-on: ubuntu-latest
+    defaults:
+      run: { working-directory: web }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { package_json_file: web/package.json }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: pnpm, cache-dependency-path: web/pnpm-lock.yaml }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm -r --if-present lint
+      - run: pnpm --filter console test
+      - run: pnpm --filter widget build
+      - run: pnpm --filter console build
+
+  e2e:
+    name: End-to-end (Docker stack + Playwright + k6)
+    runs-on: ubuntu-latest
+    needs: [rails, web]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { package_json_file: web/package.json }
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: pnpm, cache-dependency-path: web/pnpm-lock.yaml }
+      - uses: grafana/setup-k6-action@v1
+      - run: scripts/dev-up.sh
+      - run: pnpm --dir web/e2e exec playwright install --with-deps chromium
+      - run: K6_DURATION_S=30 scripts/test-all.sh
+        env: { TEST_OUT: proof/ci-tests }
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: e2e-reports, path: proof/ci-tests }
+      - run: scripts/dev-down.sh
+        if: always()
+
+  terraform:
+    name: Terraform (fmt + validate)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform -chdir=infra fmt -check -recursive
+      - run: terraform -chdir=infra init -backend=false
+      - run: terraform -chdir=infra validate

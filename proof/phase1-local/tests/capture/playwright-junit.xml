@@ -1,0 +1,28 @@
+<testsuites id="" name="" tests="4" failures="0" skipped="0" errors="0" time="34.175826">
+<testsuite name="proof.spec.ts" timestamp="2026-11-26T14:15:30.791Z" hostname="chromium" tests="4" failures="0" skipped="0" time="31.281" errors="0">
+<testcase name="chat, tool call and citation" classname="proof.spec.ts" time="3.864">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+</testcase>
+<testcase name="voice and avatar" classname="proof.spec.ts" time="10.825">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+</testcase>
+<testcase name="operator inbox, takeover, latency and metrics" classname="proof.spec.ts" time="8.954">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+</testcase>
+<testcase name="phone, help center and Jaeger" classname="proof.spec.ts" time="7.638">
+<properties>
+<property name="serial" value="">
+</property>
+</properties>
+</testcase>
+</testsuite>
+</testsuites>

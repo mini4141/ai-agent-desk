@@ -1,6 +1,7 @@
 {
   "name": "ai-agent-desk-web",
   "private": true,
+  "packageManager": "pnpm@12.3.4",
   "scripts": {
     "build:widget": "pnpm --filter widget build",
     "lint": "pnpm -r --if-present lint",

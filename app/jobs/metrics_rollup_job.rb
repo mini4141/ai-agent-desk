@@ -1,4 +1,5 @@
-# Daily rollups per company, channel and experiment variant (SPECS F9).
+# Daily rollups per company, channel and experiment variant (SPECS F9). Synthetic traffic (k6, drills, smoke
+# scripts: visitor ids k6-*, drill-*, smoke-*) is excluded so load tests do not distort business metrics.
 # Runs nightly via sidekiq-cron and on demand from the dashboard.
 class MetricsRollupJob
   include Sidekiq::Job
@@ -16,6 +17,7 @@ class MetricsRollupJob
            count(*) FILTER (WHERE tool_called) AS tool_conversations
     FROM conversations
     WHERE company_id = $1 AND started_at >= $2 AND started_at < $3
+      AND (visitor_id IS NULL OR visitor_id !~ '^(k6|drill|smoke)-')
     GROUP BY channel, variant
   SQL
 
@@ -33,10 +35,12 @@ class MetricsRollupJob
   def rollup_day(company, day)
     from = day.beginning_of_day
     rows = ActiveRecord::Base.connection.exec_query(SQL, "rollup", [company.id, from, from + 1.day])
-    rows.each do |row|
-      rollup = MetricRollup.find_or_initialize_by(company:, day:, channel: row["channel"], variant: row["variant"])
-      rollup.metrics = row.except("channel", "variant").transform_values { |v| v.is_a?(BigDecimal) ? v.to_f : v.to_i }
-      rollup.save!
+    MetricRollup.transaction do
+      MetricRollup.where(day:).delete_all # recompute from scratch so excluded/removed rows don't linger
+      rows.each do |row|
+        MetricRollup.create!(company:, day:, channel: row["channel"], variant: row["variant"],
+                             metrics: row.except("channel", "variant").transform_values { |v| v.is_a?(BigDecimal) ? v.to_f : v.to_i })
+      end
     end
   end
 end

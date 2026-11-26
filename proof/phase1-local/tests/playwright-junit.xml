@@ -1,6 +1,62 @@
-<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="15.483948">
-<testsuite name="chat-handoff.spec.ts" timestamp="2026-11-26T13:34:26.061Z" hostname="chromium" tests="1" failures="0" skipped="0" time="13.134" errors="0">
-<testcase name="web chat answers, escalates, operator takes over, resolves, and metrics update" classname="chat-handoff.spec.ts" time="13.134">
+<testsuites id="" name="" tests="10" failures="0" skipped="4" errors="0" time="36.839826">
+<testsuite name="chat-handoff.spec.ts" timestamp="2026-11-26T14:12:37.077Z" hostname="chromium" tests="1" failures="0" skipped="0" time="14.05" errors="0">
+<testcase name="web chat answers, escalates, operator takes over, resolves, and metrics update" classname="chat-handoff.spec.ts" time="14.05">
+</testcase>
+</testsuite>
+<testsuite name="phone-help.spec.ts" timestamp="2026-11-26T14:12:37.077Z" hostname="chromium" tests="3" failures="0" skipped="0" time="4.487" errors="0">
+<testcase name="phone simulator: a call completes one question and answer over mu-law frames" classname="phone-help.spec.ts" time="3.977">
+</testcase>
+<testcase name="help center is server-rendered: article text is in the HTML without JavaScript" classname="phone-help.spec.ts" time="0.217">
+</testcase>
+<testcase name="greeting_v2 assignment is sticky per visitor" classname="phone-help.spec.ts" time="0.293">
+</testcase>
+</testsuite>
+<testsuite name="proof.spec.ts" timestamp="2026-11-26T14:12:37.077Z" hostname="chromium" tests="4" failures="0" skipped="4" time="0" errors="0">
+<testcase name="chat, tool call and citation" classname="proof.spec.ts">
+<properties>
+<property name="serial" value="">
+</property>
+<property name="skip" value="proof capture only runs from scripts/capture-proof.sh">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="voice and avatar" classname="proof.spec.ts">
+<properties>
+<property name="serial" value="">
+</property>
+<property name="skip" value="proof capture only runs from scripts/capture-proof.sh">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="operator inbox, takeover, latency and metrics" classname="proof.spec.ts">
+<properties>
+<property name="serial" value="">
+</property>
+<property name="skip" value="proof capture only runs from scripts/capture-proof.sh">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="phone, help center and Jaeger" classname="proof.spec.ts">
+<properties>
+<property name="serial" value="">
+</property>
+<property name="skip" value="proof capture only runs from scripts/capture-proof.sh">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="voice-avatar.spec.ts" timestamp="2026-11-26T14:12:37.077Z" hostname="chromium" tests="2" failures="0" skipped="0" time="16.327" errors="0">
+<testcase name="voice: hold-to-talk (fake mic) gets a spoken reply" classname="voice-avatar.spec.ts" time="7.712">
+</testcase>
+<testcase name="avatar: speaks the answer and the interview fields are stored on the conversation" classname="voice-avatar.spec.ts" time="8.615">
 </testcase>
 </testsuite>
 </testsuites>
