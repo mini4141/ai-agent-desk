@@ -9,7 +9,8 @@ resource "aws_cloudwatch_log_group" "svc" {
 }
 
 locals {
-  alb_url = "http://${aws_lb.main.dns_name}"
+  alb_url   = "http://${aws_lb.main.dns_name}"
+  https_url = "https://${aws_cloudfront_distribution.console.domain_name}"
 
   secret_keys = ["DATABASE_URL", "REDIS_URL", "JWT_SECRET", "SECRET_KEY_BASE", "AR_ENC_PRIMARY_KEY", "AR_ENC_DETERMINISTIC_KEY",
   "AR_ENC_KEY_DERIVATION_SALT", "TOOL_HMAC_SECRET", "LOAD_TEST_TOKEN", "SEED_PASSWORD"]
@@ -28,7 +29,7 @@ locals {
     { name = "BEDROCK_EMBED_MODEL_ID", value = var.bedrock_embed_model_id },
     { name = "S3_BUCKET", value = aws_s3_bucket.uploads.bucket },
     { name = "COMPANY_BACKEND_URL", value = local.alb_url },
-    { name = "HELP_CENTER_URL", value = local.alb_url },
+    { name = "HELP_CENTER_URL", value = local.https_url },
     { name = "INGEST_ALLOWED_HOSTS", value = aws_lb.main.dns_name },
     { name = "EMF", value = "1" },
     { name = "RUBY_YJIT_ENABLE", value = "1" },
@@ -209,7 +210,7 @@ resource "aws_ecs_task_definition" "help_center" {
     portMappings = [{ containerPort = 3001 }]
     environment = [
       { name = "API_URL", value = local.alb_url },
-      { name = "PUBLIC_API_URL", value = local.alb_url },
+      { name = "PUBLIC_API_URL", value = local.https_url },
     ]
     logConfiguration = local.log["help-center"]
   }])

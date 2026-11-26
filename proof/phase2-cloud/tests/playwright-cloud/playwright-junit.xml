@@ -1,0 +1,138 @@
+<testsuites id="" name="" tests="6" failures="0" skipped="3" errors="3" time="183.80561899999998">
+<testsuite name="chat-handoff.spec.ts" timestamp="2026-11-26T15:35:47.669Z" hostname="chromium" tests="1" failures="0" skipped="0" time="60.011" errors="1">
+<testcase name="web chat answers, escalates, operator takes over, resolves, and metrics update" classname="chat-handoff.spec.ts" time="60.011">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\..\..\..\web\e2e\test-results\chat-handoff-web-chat-answ-bdb5f-resolves-and-metrics-update-chromium\error-context.md]]
+]]>
+</system-out>
+<error message="Test timeout of 60000ms exceeded." type="Error">
+<![CDATA[  [chromium] › chat-handoff.spec.ts:5:1 › web chat answers, escalates, operator takes over, resolves, and metrics update 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test ended.
+    Call log:
+      - waiting for getByTestId('launcher')
+        - locator resolved to <button class="launcher" aria-label="Support" data-testid="launcher">💬</button>
+      - attempting click action
+        - waiting for element to be visible, enabled and stable
+      - element was detached from the DOM, retrying
+
+
+       at helpers.ts:8
+
+       6 | export async function openWidget(page: Page, company = "mirai") {
+       7 |   await page.goto(`${urls.help}/${company}/help`);
+    >  8 |   await page.getByTestId("launcher").click();
+         |                                      ^
+       9 |   await expect(page.getByTestId("widget")).toBeVisible();
+      10 |   // the conversation is ready once Action Cable is subscribed (history delivered)
+      11 |   await expect(page.getByTestId("widget").locator(".dot.on")).toBeVisible({ timeout: 20_000 });
+        at openWidget (C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\helpers.ts:8:38)
+        at C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\chat-handoff.spec.ts:14:3
+
+    Error Context: ..\test-results\chat-handoff-web-chat-answ-bdb5f-resolves-and-metrics-update-chromium\error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+<testsuite name="proof.spec.ts" timestamp="2026-11-26T15:35:47.669Z" hostname="chromium" tests="3" failures="0" skipped="3" time="0" errors="0">
+<testcase name="chat, tool call and citation" classname="proof.spec.ts">
+<properties>
+<property name="serial" value="">
+</property>
+<property name="skip" value="proof capture only runs from scripts/capture-proof.sh">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="voice and avatar" classname="proof.spec.ts">
+<properties>
+<property name="serial" value="">
+</property>
+<property name="skip" value="proof capture only runs from scripts/capture-proof.sh">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+<testcase name="operator inbox, takeover, latency and metrics" classname="proof.spec.ts">
+<properties>
+<property name="serial" value="">
+</property>
+<property name="skip" value="proof capture only runs from scripts/capture-proof.sh">
+</property>
+</properties>
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="voice-avatar.spec.ts" timestamp="2026-11-26T15:35:47.669Z" hostname="chromium" tests="2" failures="0" skipped="0" time="120.125" errors="2">
+<testcase name="voice: hold-to-talk (fake mic) gets a spoken reply" classname="voice-avatar.spec.ts" time="60.058">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\..\..\..\web\e2e\test-results\voice-avatar-voice-hold-to-talk-fake-mic-gets-a-spoken-reply-chromium\error-context.md]]
+]]>
+</system-out>
+<error message="Test timeout of 60000ms exceeded." type="Error">
+<![CDATA[  [chromium] › voice-avatar.spec.ts:20:1 › voice: hold-to-talk (fake mic) gets a spoken reply ──────
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByTestId('launcher')
+
+
+       at helpers.ts:8
+
+       6 | export async function openWidget(page: Page, company = "mirai") {
+       7 |   await page.goto(`${urls.help}/${company}/help`);
+    >  8 |   await page.getByTestId("launcher").click();
+         |                                      ^
+       9 |   await expect(page.getByTestId("widget")).toBeVisible();
+      10 |   // the conversation is ready once Action Cable is subscribed (history delivered)
+      11 |   await expect(page.getByTestId("widget").locator(".dot.on")).toBeVisible({ timeout: 20_000 });
+        at openWidget (C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\helpers.ts:8:38)
+        at C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\voice-avatar.spec.ts:21:3
+
+    Error Context: ..\test-results\voice-avatar-voice-hold-to-talk-fake-mic-gets-a-spoken-reply-chromium\error-context.md
+]]>
+</error>
+</testcase>
+<testcase name="avatar: speaks the answer and the interview fields are stored on the conversation" classname="voice-avatar.spec.ts" time="60.067">
+<system-out>
+<![CDATA[
+[[ATTACHMENT|..\..\..\..\web\e2e\test-results\voice-avatar-avatar-speaks-8afd2--stored-on-the-conversation-chromium\error-context.md]]
+]]>
+</system-out>
+<error message="Test timeout of 60000ms exceeded." type="Error">
+<![CDATA[  [chromium] › voice-avatar.spec.ts:30:1 › avatar: speaks the answer and the interview fields are stored on the conversation 
+
+    Test timeout of 60000ms exceeded.
+
+    Error: locator.click: Test timeout of 60000ms exceeded.
+    Call log:
+      - waiting for getByTestId('launcher')
+
+
+       at helpers.ts:8
+
+       6 | export async function openWidget(page: Page, company = "mirai") {
+       7 |   await page.goto(`${urls.help}/${company}/help`);
+    >  8 |   await page.getByTestId("launcher").click();
+         |                                      ^
+       9 |   await expect(page.getByTestId("widget")).toBeVisible();
+      10 |   // the conversation is ready once Action Cable is subscribed (history delivered)
+      11 |   await expect(page.getByTestId("widget").locator(".dot.on")).toBeVisible({ timeout: 20_000 });
+        at openWidget (C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\helpers.ts:8:38)
+        at C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\voice-avatar.spec.ts:31:3
+
+    Error Context: ..\test-results\voice-avatar-avatar-speaks-8afd2--stored-on-the-conversation-chromium\error-context.md
+]]>
+</error>
+</testcase>
+</testsuite>
+</testsuites>

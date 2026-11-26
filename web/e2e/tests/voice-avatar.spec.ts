@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { apiGet, apiToken, ask, openWidget } from "./helpers";
 
-async function holdToTalk(page: import("@playwright/test").Page, ms = 1200) {
+async function holdToTalk(page: import("@playwright/test").Page, ms = Number(process.env.HOLD_MS ?? 1200)) {
   const ptt = page.getByTestId("ptt");
   const box = (await ptt.boundingBox())!;
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
@@ -12,6 +12,8 @@ async function holdToTalk(page: import("@playwright/test").Page, ms = 1200) {
 
 test.beforeEach(async ({ page }) => {
   // Headless Chromium has no real speech recognition: the mock STT path takes this transcript hint.
+  // Local: headless Chromium has no speech recognition, so the mock STT path takes this transcript hint.
+  // Cloud (SPEECH_PROVIDER=aws): the hint is ignored and Transcribe hears the fake-microphone audio file instead.
   await page.addInitScript(() => ((window as unknown as Record<string, string>).__AGENT_DESK_STT_HINT__ = "注文 A-1023 はいつ届きますか？"));
 });
 
@@ -20,9 +22,9 @@ test("voice: hold-to-talk (fake mic) gets a spoken reply", async ({ page }) => {
   await page.getByTestId("tab-voice_web").click();
   await expect(page.getByTestId("widget").locator(".dot.on")).toBeVisible();
   await holdToTalk(page);
-  await expect(page.getByTestId("bubble-customer").last()).toContainText("A-1023");
-  await expect(page.getByTestId("bubble-ai").last()).toContainText("出荷済み");
-  await expect(page.getByTestId("spoken")).toContainText("出荷済み", { timeout: 15_000 });
+  await expect(page.getByTestId("bubble-customer").last()).toContainText(/注文|A-?1023/i, { timeout: 30_000 });
+  await expect(page.getByTestId("bubble-ai").last()).toContainText("出荷済み", { timeout: 30_000 });
+  await expect(page.getByTestId("spoken")).toContainText("出荷済み", { timeout: 30_000 });
 });
 
 test("avatar: speaks the answer and the interview fields are stored on the conversation", async ({ page }) => {
@@ -31,7 +33,7 @@ test("avatar: speaks the answer and the interview fields are stored on the conve
   await expect(page.getByTestId("avatar")).toBeVisible();
   await expect(page.getByTestId("widget").locator(".dot.on")).toBeVisible();
   await holdToTalk(page);
-  await expect(page.getByTestId("spoken")).toContainText("出荷済み", { timeout: 15_000 });
+  await expect(page.getByTestId("spoken")).toContainText("出荷済み", { timeout: 30_000 });
 
   // interview mode: scripted 3-question intake
   await page.getByTestId("interview-toggle").click();

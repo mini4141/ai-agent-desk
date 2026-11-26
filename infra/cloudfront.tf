@@ -67,6 +67,21 @@ resource "aws_cloudfront_distribution" "console" {
     }
   }
 
+  # Help center (Next.js, served by the ALB's default target group) on the same HTTPS origin, so the embedded
+  # widget runs in a secure context (microphone access needs https).
+  dynamic "ordered_cache_behavior" {
+    for_each = ["/mirai/*", "/harbor/*", "/_next/*"]
+    content {
+      path_pattern             = ordered_cache_behavior.value
+      target_origin_id         = "alb"
+      viewer_protocol_policy   = "redirect-to-https"
+      allowed_methods          = ["GET", "HEAD", "OPTIONS"]
+      cached_methods           = ["GET", "HEAD"]
+      cache_policy_id          = data.aws_cloudfront_cache_policy.disabled.id
+      origin_request_policy_id = data.aws_cloudfront_origin_request_policy.all_viewer_except_host.id
+    }
+  }
+
   # SPA routing for the console
   custom_error_response {
     error_code            = 403

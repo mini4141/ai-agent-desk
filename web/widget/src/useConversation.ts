@@ -17,10 +17,16 @@ type ServerEvent = {
   [k: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 };
 
+// crypto.randomUUID only exists in secure contexts (https / localhost); plain-http embeds fall back to getRandomValues.
+const uuid = () =>
+  typeof crypto.randomUUID === "function"
+    ? crypto.randomUUID()
+    : "10000000-1000-4000-8000-100000000000".replace(/[018]/g, (c) => (Number(c) ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (Number(c) / 4)))).toString(16));
+
 const visitorId = () => {
   const key = "agent-desk-visitor";
   let id = localStorage.getItem(key);
-  if (!id) localStorage.setItem(key, (id = crypto.randomUUID()));
+  if (!id) localStorage.setItem(key, (id = uuid()));
   return id;
 };
 

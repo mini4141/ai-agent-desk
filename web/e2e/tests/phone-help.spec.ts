@@ -4,6 +4,7 @@ import { apiGet, apiToken } from "./helpers";
 
 test("phone simulator: a call completes one question and answer over mu-law frames", async ({ page }) => {
   await page.goto(urls.phone);
+  await page.getByTestId("call").waitFor();
   await page.getByTestId("call").click();
   await expect(page.getByTestId("state")).toHaveAttribute("data-state", "in-call", { timeout: 15_000 });
 
@@ -11,11 +12,11 @@ test("phone simulator: a call completes one question and answer over mu-law fram
   const box = (await talk.boundingBox())!;
   await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
   await page.mouse.down();
-  await page.waitForTimeout(1200);
+  await page.waitForTimeout(Number(process.env.HOLD_MS ?? 1200));
   await page.mouse.up();
 
-  await expect(page.getByTestId("log")).toContainText("caller: 注文 A-1023", { timeout: 15_000 });
-  await expect(page.getByTestId("log")).toContainText("agent:", { timeout: 15_000 });
+  await expect(page.getByTestId("log")).toContainText(/caller: .*(注文|1023)/, { timeout: 30_000 });
+  await expect(page.getByTestId("log")).toContainText("agent:", { timeout: 30_000 });
   await expect(page.getByTestId("log")).toContainText("出荷済み");
 
   const token = await apiToken("owner@mirai.example");

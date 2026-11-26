@@ -1,0 +1,81 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: scripts/k6-chat.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 5 max VUs, 1m40s max duration (incl. graceful stop):
+              * chat: 1 iterations for each of 5 VUs (maxDuration: 1m10s, gracefulStop: 30s)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TTFT ms  p50=424 p90=1811 p95=1883 max=1897  answers=22
+
+chat ✓ [ 100% ] 5 VUs  1m02.6s/1m10s  5/5 iters, 1 per VU
+time="2026-11-26T22:39:55+07:00" level=error msg="thresholds on metrics 'ttft_ms' have been crossed"
