@@ -73,7 +73,7 @@ AWS layout (ap-southeast-2): CloudFront (console on S3, plus `/api`, `/cable`, `
 
 ## Numbers (measured, not claimed)
 
-- **Local, mock LLM, 20 virtual users × 2 min (k6):** time-to-first-token p50 86 ms / **p95 210 ms** (budget 400 ms) with OpenTelemetry on.
+- **Local, mock LLM, 20 virtual users × 2 min (k6):** time-to-first-token p50 79 ms / **p95 143 ms** (budget 400 ms) with OpenTelemetry on (an earlier 2-minute run measured p95 210 ms).
 - **AWS, Bedrock in the loop, 5 users:** time-to-first-token p50 ≈ 0.85 s, **p95 ≈ 1.5 s** (budget 1.5 s) — see `proof/phase2-cloud/tests/k6-cloud.txt`; chat answer end-to-end ≈ 0.5–1.0 s server-side.
 - **Database:** inbox query 17.7 → 4.7 ms with the composite index; large-tenant vector search 103 → 4 ms with HNSW (and the planner correctly prefers the btree for a small tenant) — [`db-performance.md`](db-performance.md).
 - **Reliability:** killing one of two web tasks mid-chat → reconnect in ~2 s, history replayed, conversation continued.
@@ -81,7 +81,7 @@ AWS layout (ap-southeast-2): CloudFront (console on S3, plus `/api`, `/cable`, `
 
 ## What was hard (and what I learned)
 
-1. **The latency budget on a laptop.** The first k6 run gave TTFT p95 ≈ 3.9 s. Fixes, in order of effect: stop per-token Redis broadcasts (coalesce to 30 ms), drop verbose dev logging, YJIT, puma cluster mode (one MRI process is GVL-bound for Action Cable), and model load realistically (one WebSocket per user instead of a session per request). Result p95 210 ms. ([ADR 0004](adr/0004-streaming-strategy.md))
+1. **The latency budget on a laptop.** The first k6 run gave TTFT p95 ≈ 3.9 s. Fixes, in order of effect: stop per-token Redis broadcasts (coalesce to 30 ms), drop verbose dev logging, YJIT, puma cluster mode (one MRI process is GVL-bound for Action Cable), and model load realistically (one WebSocket per user instead of a session per request). Result p95 ~150-210 ms. ([ADR 0004](adr/0004-streaming-strategy.md))
 2. **Action Cable reorders messages.** Messages run on a thread pool, so `audio_end` could be handled before the audio frames and `audio_start` — dropped utterances. Fixed with sequence numbers, an `UtteranceBuffer` and an order-independent buffer factory; found by the CI run, not by the happy-path tests on my machine.
 3. **Races between the handoff and the AI draft.** The operator could open a conversation after it hit the inbox but before the AI draft was written. The draft is now stored in the same update as the status change and replayed on subscribe.
 4. **Real AWS differs from mocks.** In the cloud I hit: a secret not yet created when ECS started tasks; logs not reaching CloudWatch (production logger → file, not stdout); a keyword-argument bug in the CloudWatch EMF emitter (only reachable with `EMF=1`); `crypto.randomUUID` missing on plain-http pages and `getUserMedia` needing https (so the help center and widget are served through CloudFront); Transcribe language tags (`ja-JP` vs `ja`); `AsyncResponse#join!`. Each is now a fix plus, where possible, a regression spec.

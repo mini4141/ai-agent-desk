@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="rspec" tests="13" skipped="0" failures="0" errors="0" time="6.108251" timestamp="2026-11-26T14:12:10+00:00" hostname="df4ff27af0b0">
+<testsuite name="rspec" tests="16" skipped="0" failures="0" errors="0" time="4.203803" timestamp="2026-11-26T17:14:39+00:00" hostname="45799059fb5d">
 <properties>
-<property name="seed" value="61786"/>
+<property name="seed" value="56044"/>
 </properties>
-<testcase classname="spec.requests.tenancy_spec" name="Tenancy and authorisation signs in with email and password and returns a JWT" file="./spec/requests/tenancy_spec.rb" time="1.439821"></testcase>
-<testcase classname="spec.requests.tenancy_spec" name="Tenancy and authorisation rejects unauthenticated requests" file="./spec/requests/tenancy_spec.rb" time="0.124910"></testcase>
-<testcase classname="spec.requests.tenancy_spec" name="Tenancy and authorisation keeps admin settings (workflow tools) away from operators but open to owners" file="./spec/requests/tenancy_spec.rb" time="0.512751"></testcase>
-<testcase classname="spec.requests.tenancy_spec" name="Tenancy and authorisation never lets company A read company B conversations" file="./spec/requests/tenancy_spec.rb" time="0.511971"></testcase>
-<testcase classname="spec.channels.conversation_channel_spec" name="ConversationChannel streams tokens and the final answer for a customer message" file="./spec/channels/conversation_channel_spec.rb" time="1.198455"></testcase>
-<testcase classname="spec.jobs.metrics_rollup_spec" name="MetricsRollupJob rolls conversations up per day, channel and variant and reports the experiment delta" file="./spec/jobs/metrics_rollup_spec.rb" time="0.308762"></testcase>
-<testcase classname="spec.agents.agent_run_spec" name="AgentRun hands off to a human with an AI-drafted reply when the customer asks for a person" file="./spec/agents/agent_run_spec.rb" time="0.313245"></testcase>
-<testcase classname="spec.agents.agent_run_spec" name="AgentRun answers from the company knowledge with a citation and per-stage timings" file="./spec/agents/agent_run_spec.rb" time="0.226558"></testcase>
-<testcase classname="spec.agents.agent_run_spec" name="AgentRun calls the company workflow tool, signed with HMAC, and answers from its result" file="./spec/agents/agent_run_spec.rb" time="0.427500"></testcase>
-<testcase classname="spec.agents.agent_run_spec" name="AgentRun serves a repeated question from the Redis answer cache" file="./spec/agents/agent_run_spec.rb" time="0.241678"></testcase>
-<testcase classname="spec.agents.agent_run_spec" name="AgentRun hands off on low retrieval confidence" file="./spec/agents/agent_run_spec.rb" time="0.194331"></testcase>
-<testcase classname="spec.requests.handoff_flow_spec" name="Operator takeover lets an operator take over, reply, hand back and resolve" file="./spec/requests/handoff_flow_spec.rb" time="0.465084"></testcase>
-<testcase classname="spec.requests.handoff_flow_spec" name="Operator takeover lists the inbox without N+1 queries (Bullet raises otherwise)" file="./spec/requests/handoff_flow_spec.rb" time="0.095555"></testcase>
+<testcase classname="spec.requests.handoff_flow_spec" name="Operator takeover lists the inbox without N+1 queries (Bullet raises otherwise)" file="./spec/requests/handoff_flow_spec.rb" time="0.943241"></testcase>
+<testcase classname="spec.requests.handoff_flow_spec" name="Operator takeover lets an operator take over, reply, hand back and resolve" file="./spec/requests/handoff_flow_spec.rb" time="0.313346"></testcase>
+<testcase classname="spec.services.telemetry_spec" name="Telemetry emits a CloudWatch EMF line for a stage timing when EMF=1" file="./spec/services/telemetry_spec.rb" time="0.108111"></testcase>
+<testcase classname="spec.jobs.metrics_rollup_spec" name="MetricsRollupJob rolls conversations up per day, channel and variant and reports the experiment delta" file="./spec/jobs/metrics_rollup_spec.rb" time="0.239299"></testcase>
+<testcase classname="spec.agents.agent_run_spec" name="AgentRun answers from the company knowledge with a citation and per-stage timings" file="./spec/agents/agent_run_spec.rb" time="0.541634"></testcase>
+<testcase classname="spec.agents.agent_run_spec" name="AgentRun calls the company workflow tool, signed with HMAC, and answers from its result" file="./spec/agents/agent_run_spec.rb" time="0.372049"></testcase>
+<testcase classname="spec.agents.agent_run_spec" name="AgentRun hands off to a human with an AI-drafted reply when the customer asks for a person" file="./spec/agents/agent_run_spec.rb" time="0.180959"></testcase>
+<testcase classname="spec.agents.agent_run_spec" name="AgentRun hands off on low retrieval confidence" file="./spec/agents/agent_run_spec.rb" time="0.228276"></testcase>
+<testcase classname="spec.agents.agent_run_spec" name="AgentRun serves a repeated question from the Redis answer cache" file="./spec/agents/agent_run_spec.rb" time="0.178848"></testcase>
+<testcase classname="spec.channels.conversation_channel_spec" name="ConversationChannel streams tokens and the final answer for a customer message" file="./spec/channels/conversation_channel_spec.rb" time="0.203234"></testcase>
+<testcase classname="spec.requests.tenancy_spec" name="Tenancy and authorisation rejects unauthenticated requests" file="./spec/requests/tenancy_spec.rb" time="0.155727"></testcase>
+<testcase classname="spec.requests.tenancy_spec" name="Tenancy and authorisation keeps admin settings (workflow tools) away from operators but open to owners" file="./spec/requests/tenancy_spec.rb" time="0.211007"></testcase>
+<testcase classname="spec.requests.tenancy_spec" name="Tenancy and authorisation signs in with email and password and returns a JWT" file="./spec/requests/tenancy_spec.rb" time="0.118034"></testcase>
+<testcase classname="spec.requests.tenancy_spec" name="Tenancy and authorisation never lets company A read company B conversations" file="./spec/requests/tenancy_spec.rb" time="0.125339"></testcase>
+<testcase classname="spec.agents.thinking_filter_spec" name="Llm::ThinkingFilter hides &lt;thinking&gt; blocks even when the tags are split across chunks" file="./spec/agents/thinking_filter_spec.rb" time="0.005378"></testcase>
+<testcase classname="spec.channels.voice_channel_spec" name="VoiceChannel runs a hold-to-talk utterance through STT and the agent, whatever order the cable messages are handled in" file="./spec/channels/voice_channel_spec.rb" time="0.262602"></testcase>
 </testsuite>

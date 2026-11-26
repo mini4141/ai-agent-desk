@@ -39,7 +39,7 @@ Status: **all phases done**; the only open item is the CI e2e job (see Phase 1 n
 - [x] logs/curl-help-center-ssr.html
 - [x] docs/db-performance.md (real EXPLAIN)
 - [x] docs/experiments/greeting-v2.md
-- [x] scripts/test-all.sh green locally (16 RSpec, 2 Vitest, 6 Playwright, k6 p95 210 ms)
+- [x] scripts/test-all.sh green locally (16 RSpec, 2 Vitest, 6 Playwright, k6 p95 143 ms)
 - [ ] CI e2e job green on main — RSpec, web and Terraform jobs are green; the Docker+Playwright+k6 job failed on GitHub's 2-vCPU runners until the Action Cable ordering / draft races were fixed (commit "order-independent voice frames…"); re-check the latest run
 
 ## Phase 2: AWS (SPECS §10)
