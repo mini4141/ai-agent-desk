@@ -1,17 +1,9 @@
-<testsuites id="" name="" tests="10" failures="1" skipped="4" errors="0" time="119.063078">
-<testsuite name="chat-handoff.spec.ts" timestamp="2026-11-26T16:19:30.825Z" hostname="chromium" tests="1" failures="0" skipped="0" time="35.027" errors="0">
-<testcase name="web chat answers, escalates, operator takes over, resolves, and metrics update" classname="chat-handoff.spec.ts" time="35.027">
+<testsuites id="" name="" tests="7" failures="1" skipped="4" errors="0" time="88.126609">
+<testsuite name="chat-handoff.spec.ts" timestamp="2026-11-26T16:29:22.398Z" hostname="chromium" tests="1" failures="0" skipped="0" time="30.486" errors="0">
+<testcase name="web chat answers, escalates, operator takes over, resolves, and metrics update" classname="chat-handoff.spec.ts" time="30.486">
 </testcase>
 </testsuite>
-<testsuite name="phone-help.spec.ts" timestamp="2026-11-26T16:19:30.825Z" hostname="chromium" tests="3" failures="0" skipped="0" time="14.85" errors="0">
-<testcase name="phone simulator: a call completes one question and answer over mu-law frames" classname="phone-help.spec.ts" time="12.143">
-</testcase>
-<testcase name="help center is server-rendered: article text is in the HTML without JavaScript" classname="phone-help.spec.ts" time="0.872">
-</testcase>
-<testcase name="greeting_v2 assignment is sticky per visitor" classname="phone-help.spec.ts" time="1.835">
-</testcase>
-</testsuite>
-<testsuite name="proof.spec.ts" timestamp="2026-11-26T16:19:30.825Z" hostname="chromium" tests="4" failures="0" skipped="4" time="0" errors="0">
+<testsuite name="proof.spec.ts" timestamp="2026-11-26T16:29:22.398Z" hostname="chromium" tests="4" failures="0" skipped="4" time="0" errors="0">
 <testcase name="chat, tool call and citation" classname="proof.spec.ts">
 <properties>
 <property name="serial" value="">
@@ -53,15 +45,17 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="voice-avatar.spec.ts" timestamp="2026-11-26T16:19:30.825Z" hostname="chromium" tests="2" failures="1" skipped="0" time="66.553" errors="0">
-<testcase name="voice: hold-to-talk (fake mic) gets a spoken reply" classname="voice-avatar.spec.ts" time="43.359">
+<testsuite name="voice-avatar.spec.ts" timestamp="2026-11-26T16:29:22.398Z" hostname="chromium" tests="2" failures="1" skipped="0" time="56.082" errors="0">
+<testcase name="voice: hold-to-talk (fake mic) gets a spoken reply" classname="voice-avatar.spec.ts" time="14.503">
+</testcase>
+<testcase name="avatar: speaks the answer and the interview fields are stored on the conversation" classname="voice-avatar.spec.ts" time="41.579">
 <system-out>
 <![CDATA[
-[[ATTACHMENT|..\..\..\..\web\e2e\test-results\voice-avatar-voice-hold-to-talk-fake-mic-gets-a-spoken-reply-chromium\error-context.md]]
+[[ATTACHMENT|..\..\..\..\web\e2e\test-results\voice-avatar-avatar-speaks-8afd2--stored-on-the-conversation-chromium\error-context.md]]
 ]]>
 </system-out>
 <failure message="expect(locator).toContainText(expected) failed" type="expect.toContainText">
-<![CDATA[  [chromium] › voice-avatar.spec.ts:24:1 › voice: hold-to-talk (fake mic) gets a spoken reply ──────
+<![CDATA[  [chromium] › voice-avatar.spec.ts:35:1 › avatar: speaks the answer and the interview fields are stored on the conversation 
 
     Error: expect(locator).toContainText(expected) failed
 
@@ -77,20 +71,18 @@
            - unexpected value ""
 
 
-      29 |   await expect(page.getByTestId("bubble-customer").last()).toContainText(HEARD, { timeout: 30_000 });
-      30 |   await expect(page.getByTestId("bubble-ai").last()).toContainText(ANSWER, { timeout: 30_000 });
-    > 31 |   await expect(page.getByTestId("spoken")).toContainText(ANSWER, { timeout: 30_000 });
+      39 |   await expect(page.getByTestId("widget").locator(".dot.on")).toBeVisible();
+      40 |   await holdToTalk(page);
+    > 41 |   await expect(page.getByTestId("spoken")).toContainText(ANSWER, { timeout: 30_000 });
          |                                            ^
-      32 | });
-      33 |
-      34 | test("avatar: speaks the answer and the interview fields are stored on the conversation", async ({ page }) => {
-        at C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\voice-avatar.spec.ts:31:44
+      42 |
+      43 |   // interview mode: scripted 3-question intake
+      44 |   await page.getByTestId("interview-toggle").click();
+        at C:\Users\ThinkPad\Pictures\mmvie-v2\reqs\19-ai-agent-desk\web\e2e\tests\voice-avatar.spec.ts:41:44
 
-    Error Context: ..\test-results\voice-avatar-voice-hold-to-talk-fake-mic-gets-a-spoken-reply-chromium\error-context.md
+    Error Context: ..\test-results\voice-avatar-avatar-speaks-8afd2--stored-on-the-conversation-chromium\error-context.md
 ]]>
 </failure>
-</testcase>
-<testcase name="avatar: speaks the answer and the interview fields are stored on the conversation" classname="voice-avatar.spec.ts" time="23.194">
 </testcase>
 </testsuite>
 </testsuites>
