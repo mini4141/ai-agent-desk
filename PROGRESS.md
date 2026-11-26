@@ -1,7 +1,7 @@
 # PROGRESS
 
 Resume from the first unticked item. Phases in order: 0 scaffold → 1 local → 2 AWS → 3 destroy → 4 write-up.
-Status: **all phases done**; the only open item is the CI e2e job (see Phase 1 notes).
+Status: **all phases done**; CI is green on main.
 
 ## Phase 0: scaffold
 - [x] Repo layout, README, PROGRESS, DECISIONS, .gitignore, .gitattributes, .env.example, CI workflow
@@ -40,7 +40,7 @@ Status: **all phases done**; the only open item is the CI e2e job (see Phase 1 n
 - [x] docs/db-performance.md (real EXPLAIN)
 - [x] docs/experiments/greeting-v2.md
 - [x] scripts/test-all.sh green locally (16 RSpec, 2 Vitest, 6 Playwright, k6 p95 143 ms)
-- [ ] CI e2e job green on main — RSpec, web and Terraform jobs are green; the Docker+Playwright+k6 job failed on GitHub's 2-vCPU runners until the Action Cable ordering / draft races were fixed (commit "order-independent voice frames…"); re-check the latest run
+- [x] CI green on main (RSpec, web, Terraform and the Docker + Playwright + k6 e2e job) after fixing the Action Cable ordering and handoff-draft races found by the first CI runs
 
 ## Phase 2: AWS (SPECS §10)
 - [x] aws sts get-caller-identity OK
