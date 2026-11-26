@@ -1,0 +1,30 @@
+# ECS deployment circuit breaker demo: roll company-backend to an image tag that does not exist
+# command: scripts/ecs-deploy-image.sh does-not-exist company-backend
+
+## deploy script output
+[company-backend] arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-company-backend:4 -> arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-company-backend:5
+[company-backend] waiting for the rolling deployment ...
+[company-backend] COMPLETED
+
+## service events (newest first)
+2026-11-26T23:50:48.979000+07:00	(service ai-agent-desk-company-backend) has reached a steady state.
+2026-11-26T23:50:48.978000+07:00	(service ai-agent-desk-company-backend) (deployment ecs-svc/<ACCOUNT_ID>8870721) deployment completed.
+2026-11-26T23:49:44.972000+07:00	(service ai-agent-desk-company-backend) stopped 1 pending tasks.
+2026-11-26T23:49:41.516000+07:00	(service ai-agent-desk-company-backend) rolling back to deployment ecs-svc/<ACCOUNT_ID>8870721.
+2026-11-26T23:49:41.515000+07:00	(service ai-agent-desk-company-backend) (deployment ecs-svc/<ACCOUNT_ID>5989271) deployment failed: tasks failed to start.
+2026-11-26T23:49:26.335000+07:00	(service ai-agent-desk-company-backend) has started 1 tasks: (task 3880b92d59ff4cbf8c7d4fb53a9178ea).
+2026-11-26T23:44:11.127000+07:00	(service ai-agent-desk-company-backend) was unable to place a task. Reason: CannotPullContainerError: pull image manifest has been retried 7 time(s): failed to resolve ref <ACCOUNT_ID>.dkr.ecr.ap-southeast-2.amazonaws.com/ai-agent-desk/company-backend:does-not-exist: <ACCOUNT_ID>.dkr.ecr.ap-southeast-2.amazonaws.com/ai-agent-desk/company-backend:does-not-exist: not found.
+2026-11-26T23:42:36.505000+07:00	(service ai-agent-desk-company-backend) has started 1 tasks: (task 0757bb294a154856a12ab6b71b91f1eb).
+2026-11-26T23:42:05.440000+07:00	(service ai-agent-desk-company-backend) was unable to place a task. Reason: CannotPullContainerError: pull image manifest has been retried 7 time(s): failed to resolve ref <ACCOUNT_ID>.dkr.ecr.ap-southeast-2.amazonaws.com/ai-agent-desk/company-backend:does-not-exist: <ACCOUNT_ID>.dkr.ecr.ap-southeast-2.amazonaws.com/ai-agent-desk/company-backend:does-not-exist: not found.
+2026-11-26T23:40:30.359000+07:00	(service ai-agent-desk-company-backend) has started 1 tasks: (task c3d6c<ACCOUNT_ID>299fb9d18d642e8).
+2026-11-26T23:39:50.719000+07:00	(service ai-agent-desk-company-backend) was unable to place a task. Reason: CannotPullContainerError: pull image manifest has been retried 7 time(s): failed to resolve ref <ACCOUNT_ID>.dkr.ecr.ap-southeast-2.amazonaws.com/ai-agent-desk/company-backend:does-not-exist: <ACCOUNT_ID>.dkr.ecr.ap-southeast-2.amazonaws.com/ai-agent-desk/company-backend:does-not-exist: not found.
+2026-11-26T23:38:25.721000+07:00	(service ai-agent-desk-company-backend) has started 1 tasks: (task 9b6ec8759ec54d578a5bde23afaa7791).
+2026-11-26T22:45:31.047000+07:00	(service ai-agent-desk-company-backend) has reached a steady state.
+2026-11-26T22:45:31.046000+07:00	(service ai-agent-desk-company-backend) (deployment ecs-svc/<ACCOUNT_ID>8870721) deployment completed.
+
+## deployments now
+PRIMARY	COMPLETED	ECS deployment ecs-svc/<ACCOUNT_ID>8870721 completed.	arn:aws:ecs:ap-southeast-2:<ACCOUNT_ID>:task-definition/ai-agent-desk-company-backend:4	1	0
+
+## current task definition image
+
+aws: [ERROR]: An error occurred (ClientException) when calling the DescribeTaskDefinition operation: Invalid task definition: Invalid revision number.

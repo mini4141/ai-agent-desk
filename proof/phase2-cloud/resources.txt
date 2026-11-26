@@ -1,0 +1,84 @@
+# Deployed AWS resources (project ai-agent-desk, region ap-southeast-2) — 2026-11-26T16:48:09Z
+
+## ECS services (Fargate)
+---------------------------------------------------------------------------------------
+|                                  DescribeServices                                   |
++--------------------------------+----------+----+----+--------------+-------+--------+
+|  ai-agent-desk-web             |  FARGATE |  2 |  2 |  COMPLETED   |  True |  True  |
+|  ai-agent-desk-worker          |  FARGATE |  1 |  1 |  COMPLETED   |  True |  True  |
+|  ai-agent-desk-help-center     |  FARGATE |  1 |  1 |  COMPLETED   |  True |  True  |
+|  ai-agent-desk-company-backend |  FARGATE |  1 |  1 |  IN_PROGRESS |  True |  True  |
++--------------------------------+----------+----+----+--------------+-------+--------+
+
+## Web tasks per availability zone
+ap-southeast-2a	RUNNING	512	1024
+ap-southeast-2b	RUNNING	512	1024
+
+## Task sizes
+ai-agent-desk-web	512	1024
+ai-agent-desk-worker	256	512
+ai-agent-desk-help-center	256	512
+ai-agent-desk-company-backend	256	512
+
+## RDS PostgreSQL
+db.t4g.micro	postgres	17.9	False	False	True	available
+
+## ElastiCache Redis
+cache.t4g.micro	redis	7.1.0	available
+
+## Load balancer
+application	internet-facing	ap-southeast-2b,ap-southeast-2a	active
+ai-agent-desk-backend	4567	/healthz
+ai-agent-desk-help	3001	/healthz
+ai-agent-desk-web	3000	/up
+
+## CloudFront
+ETUWHHYVHCZF7	Deployed	PriceClass_100	ai-agent-desk console + API
+
+## S3 / ECR / Secrets Manager / IAM roles
+ai-agent-desk-console-<ACCOUNT_ID>	ai-agent-desk-uploads-<ACCOUNT_ID>
+ai-agent-desk/help-center	ai-agent-desk/company-backend	ai-agent-desk/rails
+ai-agent-desk/app
+ai-agent-desk-ecs-execution	ai-agent-desk-ecs-task	ai-agent-desk-github-deploy
+
+## CloudWatch alarms and log groups (1-day retention)
+ai-agent-desk-alb-5xx	OK
+ai-agent-desk-alb-p95-latency	OK
+ai-agent-desk-sidekiq-dead-set	OK
+ai-agent-desk-sidekiq-queue-latency	OK
+/ecs/ai-agent-desk-adot	1
+/ecs/ai-agent-desk-company-backend	1
+/ecs/ai-agent-desk-help-center	1
+/ecs/ai-agent-desk-web	1
+/ecs/ai-agent-desk-worker	1
+
+## VPC (no NAT gateway)
+10.20.0.0/16
+NAT gateways: 0
+
+## Terraform outputs
+alb_dns = "ai-agent-desk-442659350.ap-southeast-2.elb.amazonaws.com"
+app_security_group = "sg-0c237d9c4752ab9da"
+cloudfront_domain = "d21rs26iqllvl4.cloudfront.net"
+cloudfront_id = "ETUWHHYVHCZF7"
+cluster = "ai-agent-desk"
+console_bucket = "ai-agent-desk-console-<ACCOUNT_ID>"
+ecr_repositories = {
+  "company-backend" = "<ACCOUNT_ID>.dkr.ecr.ap-southeast-2.amazonaws.com/ai-agent-desk/company-backend"
+  "help-center" = "<ACCOUNT_ID>.dkr.ecr.ap-southeast-2.amazonaws.com/ai-agent-desk/help-center"
+  "rails" = "<ACCOUNT_ID>.dkr.ecr.ap-southeast-2.amazonaws.com/ai-agent-desk/rails"
+}
+public_subnets = [
+  "subnet-0db5bbca66aabbc11",
+  "subnet-05798ddd625b89bfb",
+]
+rds_endpoint = "ai-agent-desk.ctyaymckwtm1.ap-southeast-2.rds.amazonaws.com"
+redis_endpoint = "ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com"
+secret_name = "ai-agent-desk/app"
+services = [
+  "ai-agent-desk-web",
+  "ai-agent-desk-worker",
+  "ai-agent-desk-help-center",
+  "ai-agent-desk-company-backend",
+]
+uploads_bucket = "ai-agent-desk-uploads-<ACCOUNT_ID>"

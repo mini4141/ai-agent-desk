@@ -41,7 +41,32 @@ Everything here is produced by scripts (`scripts/test-all.sh`, `scripts/capture-
 Related docs: [`docs/db-performance.md`](../docs/db-performance.md) (real EXPLAIN ANALYZE), [`docs/experiments/greeting-v2.md`](../docs/experiments/greeting-v2.md), [`docs/postmortems/`](../docs/postmortems/).
 
 ## Phase 2: cloud (`phase2-cloud/`)
-_Filled in during Phase 2._
+
+Deployed with `scripts/deploy.sh` (Terraform + ECR + ECS rolling deploys). Real services: Amazon Titan embeddings, Bedrock Converse streaming
+(Claude is configured first; **this account could not invoke Claude** — "use case details not submitted" — so Amazon Nova Lite served the answers through
+the built-in fallback, visible as `bedrock.converse_stream` spans in X-Ray), Transcribe streaming (ja-JP) and Polly neural (Tomoko).
+
+| File | Proves |
+|---|---|
+| `resources.txt` | Everything deployed: Fargate services (web ×2 in two AZs), RDS PostgreSQL 17, ElastiCache Redis 7.1, ALB, CloudFront, S3, ECR, Secrets Manager, IAM roles, alarms, 1-day log groups, **0 NAT gateways** |
+| `screenshots/01-cloud-chat-bedrock.png` | Chat answer in the cloud help center (served over CloudFront https) with tool call and citation |
+| `screenshots/02-cloud-voice-transcribe-polly.png` | Voice: Polly-synthesised Japanese utterance → fake microphone → **Amazon Transcribe** transcript ("返品はできますか？…") → answer spoken with **Polly** |
+| `screenshots/03-cloud-avatar-visemes.png` | Avatar tab with Polly viseme speech marks driving the SVG mouth |
+| `screenshots/04-cloud-operator.png` | Operator console (CloudFront) taking over an escalated conversation |
+| `screenshots/05-cloud-latency.png` | Latency dashboard (includes the 400 seeded *simulated* conversations plus real cloud turns) |
+| `screenshots/06-cloudwatch-alarms.png` | CloudWatch alarms and metric graphs rendered with `get-metric-widget-image`, including custom EMF latency metrics |
+| `screenshots/07-xray-trace-summary.png` | X-Ray trace from the ADOT sidecar: `agent.run` → retrieval → `llm.stream` → `bedrock.converse_stream` (primary refused, fallback served) → `tool.call`, plus RDS/ElastiCache spans |
+| `tests/playwright-cloud.log`, `tests/playwright-cloud/` | e2e against the cloud: chat → escalate → operator → resolve → metrics; Transcribe/Polly voice and avatar (two **flaky on first attempt, pass on retry**); phone simulator with real Transcribe; SSR check; sticky experiment |
+| `tests/k6-cloud.txt`, `tests/k6-cloud-summary.json` | 5 virtual users, time-to-first-token p50/p95 with Bedrock in the loop (recorded as measured) |
+| `logs/smoke-chat-bedrock.log` | Streamed answer with tool call, citation and per-stage timings from the cloud |
+| `logs/drill-kill-web-aws.log` | One of two ECS web tasks stopped mid-chat: reconnect in ~2 s, history replayed, conversation continued |
+| `logs/ecs-deployment-rollback-demo.txt` | Deploy of a non-existent image tag: tasks fail to start → **deployment circuit breaker rolls back automatically** |
+| `logs/gh-actions-deploy-run.txt` | The GitHub Actions OIDC deploy attempt — denied at `sts:AssumeRoleWithWebIdentity` by the account (see `docs/DECISIONS.md`); deployment ran from the PC instead |
+| `logs/terraform-apply.log`, `logs/migrate-seed.log`, `logs/cloudwatch-alarms.txt`, `logs/xray-trace-summary.txt` | Infrastructure apply, one-off migrate+seed task, alarm states, X-Ray span list |
 
 ## Phase 3: destroy (`phase3-destroy/`)
-_Filled in during Phase 3._
+
+| File | Proves |
+|---|---|
+| `verify-destroyed.txt` | `scripts/verify-destroyed.sh` after `scripts/destroy.sh`: no ECS cluster, ALB, RDS, ElastiCache, CloudFront, S3 buckets, ECR repos, secrets, IAM roles, VPC or log groups remain |
+| `destroy.log` | Output of `scripts/destroy.sh` |

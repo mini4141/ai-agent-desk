@@ -1,0 +1,112 @@
+1-6b085c20-9190679b5ee845895028720c
+agent.run 1922ms
+  ActiveRecord.transaction 39ms
+    ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+    agent_desk_production 1ms
+    Message#save 20ms
+      Conversation#increment 6ms
+        Conversation.update_all 4ms
+          agent_desk_production 1ms
+        Conversation#increment 1ms
+      agent_desk_production 1ms
+      agent_desk_production 2ms
+      Conversation#update_columns 2ms
+        agent_desk_production 1ms
+    ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+  Tool query 3ms
+    agent_desk_production 1ms
+    agent_desk_production 1ms
+  ActiveRecord.transaction 21ms
+    agent_desk_production 1ms
+    ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+    ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+    Message#save 17ms
+      agent_desk_production 1ms
+      agent_desk_production 1ms
+      Conversation#increment 2ms
+        Conversation.update_all 1ms
+          agent_desk_production 1ms
+        Conversation#increment 0ms
+      Conversation#update_columns 4ms
+        agent_desk_production 1ms
+  llm.stream 831ms
+    bedrock.converse_stream 202ms
+      GET 2ms
+      connect 0ms
+    bedrock.converse_stream 628ms
+  tool.call 59ms
+    connect 3ms
+    POST 19ms
+  ActiveRecord.transaction 13ms
+    ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+    Message#save 9ms
+      agent_desk_production 1ms
+      Conversation#increment 2ms
+        Conversation#increment 0ms
+        Conversation.update_all 1ms
+          agent_desk_production 1ms
+      agent_desk_production 1ms
+      Conversation#update_columns 1ms
+        agent_desk_production 1ms
+    agent_desk_production 1ms
+    ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+  agent_desk_production 3ms
+  ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+  Conversation#update_columns 2ms
+    agent_desk_production 2ms
+  retrieval 232ms
+    GET 2ms
+    ActiveRecord.transaction 93ms
+      agent_desk_production 2ms
+      KnowledgeSource query 2ms
+        agent_desk_production 1ms
+      agent_desk_production 1ms
+      agent_desk_production 1ms
+      KnowledgeChunk query 7ms
+        agent_desk_production 5ms
+    connect 10ms
+  ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+  Message query 4ms
+    agent_desk_production 1ms
+  agent_desk_production 1ms
+  llm.stream 617ms
+    bedrock.converse_stream 617ms
+  ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+agent_desk_production 5ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+agent_desk_production 2ms
+GET 2ms
+agent_desk_production 2ms
+ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+agent_desk_production 3ms
+ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+POST 19ms
+GET 2ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms
+agent_desk_production 1ms
+agent_desk_production 2ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+agent_desk_production 1ms
+ai-agent-desk.7n6tt9.0001.apse2.cache.amazonaws.com 1ms

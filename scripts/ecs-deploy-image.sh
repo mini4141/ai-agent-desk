@@ -18,6 +18,7 @@ for svc in "${SERVICES[@]}"; do
     | node scripts/ecs-new-taskdef.mjs "$TAG" > ".local/taskdef-$svc.json"
   new=$(aws ecs register-task-definition --cli-input-json "file://.local/taskdef-$svc.json" --query 'taskDefinition.taskDefinitionArn' --output text)
   echo "[$svc] $current -> $new"
+  echo "$new" > ".local/new-$svc.arn"
   aws ecs update-service --cluster "$CLUSTER" --service "$name" --task-definition "$new" >/dev/null
 done
 
@@ -28,7 +29,10 @@ for svc in "${SERVICES[@]}"; do
     state=$(aws ecs describe-services --cluster "$CLUSTER" --services "$name" \
       --query 'services[0].deployments[?status==`PRIMARY`]|[0].rolloutState' --output text)
     case "$state" in
-      COMPLETED) echo "[$svc] COMPLETED"; break ;;
+      COMPLETED)
+        live=$(aws ecs describe-services --cluster "$CLUSTER" --services "$name" --query 'services[0].taskDefinition' --output text)
+        if [ "$live" = "$(cat ".local/new-$svc.arn")" ]; then echo "[$svc] COMPLETED"; else echo "[$svc] ROLLED BACK by the circuit breaker (live task definition is $live)"; exit 1; fi
+        break ;;
       FAILED) echo "[$svc] FAILED -> circuit breaker rolled back"; aws ecs describe-services --cluster "$CLUSTER" --services "$name" --query 'services[0].events[:5].message' --output text; exit 1 ;;
     esac
     sleep 15

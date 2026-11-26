@@ -1,0 +1,8 @@
+------------------------------------------------------------------------------------
+|                                  DescribeAlarms                                  |
++--------------------------------------+-----+-----------------------------+-------+
+|  ai-agent-desk-alb-5xx               |  OK |  HTTPCode_Target_5XX_Count  |  5.0  |
+|  ai-agent-desk-alb-p95-latency       |  OK |  TargetResponseTime         |  1.5  |
+|  ai-agent-desk-sidekiq-dead-set      |  OK |  DeadSetSize                |  0.0  |
+|  ai-agent-desk-sidekiq-queue-latency |  OK |  QueueLatencySeconds        |  60.0 |
++--------------------------------------+-----+-----------------------------+-------+

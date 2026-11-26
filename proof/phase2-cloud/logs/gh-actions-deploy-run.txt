@@ -1,0 +1,24 @@
+# GitHub Actions deploy workflow (OIDC) — run 45859873304, workflow_dispatch on main
+# The workflow starts, requests a token and tries to assume the OIDC role; AWS denies sts:AssumeRoleWithWebIdentity (see docs/DECISIONS.md).
+﻿2026-11-26T16:33:41.8629965Z ##[group]Run aws-actions/configure-aws-credentials@v4
+2026-11-26T16:33:41.8630462Z with:
+2026-11-26T16:33:41.8630906Z   role-to-assume: arn:aws:iam::<ACCOUNT_ID>:role/ai-agent-desk-github-deploy
+2026-11-26T16:33:41.8631413Z   aws-region: ap-southeast-2
+2026-11-26T16:33:41.8631803Z   audience: sts.amazonaws.com
+2026-11-26T16:33:41.8632196Z   output-env-credentials: true
+2026-11-26T16:33:41.8632737Z env:
+2026-11-26T16:33:41.8633085Z   AWS_REGION: ap-southeast-2
+2026-11-26T16:33:41.8633454Z ##[endgroup]
+2026-11-26T16:33:42.2206599Z Assuming role with OIDC
+2026-11-26T16:33:42.7748723Z Assuming role with OIDC
+2026-11-26T16:33:42.9748963Z Assuming role with OIDC
+2026-11-26T16:33:43.2718207Z Assuming role with OIDC
+2026-11-26T16:33:43.7600295Z Assuming role with OIDC
+2026-11-26T16:33:44.4845708Z Assuming role with OIDC
+2026-11-26T16:33:46.7443282Z Assuming role with OIDC
+2026-11-26T16:33:46.7444236Z Assuming role with OIDC
+2026-11-26T16:33:53.1123447Z Assuming role with OIDC
+2026-11-26T16:34:04.7366210Z Assuming role with OIDC
+2026-11-26T16:34:26.6256271Z Assuming role with OIDC
+2026-11-26T16:34:53.1799342Z Assuming role with OIDC
+2026-11-26T16:36:20.1864193Z ##[error]Could not assume role with OIDC: Not authorized to perform sts:AssumeRoleWithWebIdentity

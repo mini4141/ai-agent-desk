@@ -37,6 +37,7 @@ test("web chat answers, escalates, operator takes over, resolves, and metrics up
   await operator.getByTestId("hand-back").click();
   await expect(operator.getByTestId("status")).toHaveText("ai");
   await operator.getByTestId("take-over").click();
+  await expect(operator.getByTestId("status")).toHaveText("human"); // let the assign land before resolving
   await operator.getByTestId("resolve").click();
   await expect(operator.getByTestId("status")).toHaveText("resolved");
 
