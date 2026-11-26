@@ -1,0 +1,16 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  max_connections: <%= ENV.fetch("DB_POOL", 30) %>
+
+development:
+  <<: *default
+  database: agent_desk_development
+
+test:
+  <<: *default
+  database: agent_desk_test
+
+production:
+  <<: *default
+  database: agent_desk_production

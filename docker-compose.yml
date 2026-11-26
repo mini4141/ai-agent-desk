@@ -1,0 +1,93 @@
+name: ai-agent-desk
+
+x-rails: &rails
+  build: .
+  image: ai-agent-desk-rails:dev
+  env_file: [.env]
+  environment: &rails-env
+    RAILS_ENV: development
+    DATABASE_URL: postgres://postgres:postgres@db:5432/agent_desk_development
+    REDIS_URL: redis://redis:6379/0
+    OTEL_EXPORTER_OTLP_ENDPOINT: http://otel-collector:4318
+    OTEL_SERVICE_NAME: agent-desk-rails
+  volumes:
+    - .:/app
+  depends_on:
+    db: { condition: service_healthy }
+    redis: { condition: service_healthy }
+
+services:
+  db:
+    image: pgvector/pgvector:0.8.1-pg17
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports: ["5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 3s
+      retries: 20
+
+  redis:
+    image: redis:7.4-alpine
+    ports: ["6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      retries: 20
+
+  web:
+    <<: *rails
+    command: bash -c "rm -f tmp/pids/server.pid && bin/rails db:prepare && bin/rails server -b 0.0.0.0 -p 3000"
+    ports: ["3000:3000"]
+    healthcheck:
+      test: ["CMD", "curl", "-fs", "http://localhost:3000/up"]
+      interval: 5s
+      retries: 40
+      start_period: 20s
+
+  worker:
+    <<: *rails
+    command: bundle exec sidekiq -C config/sidekiq.yml
+    environment:
+      <<: *rails-env
+      OTEL_SERVICE_NAME: agent-desk-sidekiq
+    depends_on:
+      web: { condition: service_healthy }
+
+  company-backend:
+    build: { context: mocks, dockerfile: company-backend/Dockerfile }
+    environment:
+      TOOL_HMAC_SECRET: dev-tool-secret
+    ports: ["4567:4567"]
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.111.0
+    command: ["--config=/etc/otel/config.yaml"]
+    volumes: ["./observability/otel-collector.yaml:/etc/otel/config.yaml:ro"]
+    ports: ["4318:4318"]
+    depends_on: [jaeger]
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.62.0
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports: ["16686:16686"]
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    volumes: ["./observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro"]
+    ports: ["9090:9090"]
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+    volumes:
+      - ./observability/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./observability/grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports: ["3030:3000"]
+
+volumes:
+  pgdata:

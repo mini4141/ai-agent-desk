@@ -1,0 +1,10 @@
+.git
+log
+tmp
+node_modules
+web
+infra
+proof
+.env
+storage
+**/node_modules

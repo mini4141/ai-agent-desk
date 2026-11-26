@@ -1,0 +1,25 @@
+.env
+.local/
+log/
+tmp/
+node_modules/
+dist/
+.next/
+coverage/
+playwright-report/
+test-results/
+storage/
+*.tfstate*
+.terraform/
+infra/**/.terraform/
+infra/.oidc-created
+infra/**/*.tfvars
+config/master.key
+config/credentials/*.key
+.bundle/
+vendor/bundle/
+*.log
+
+# Ignore key files for decrypting credentials and more.
+/config/*.key
+

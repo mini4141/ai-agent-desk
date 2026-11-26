@@ -1,0 +1,2 @@
+class WebChatAdapter < ChannelAdapter
+end

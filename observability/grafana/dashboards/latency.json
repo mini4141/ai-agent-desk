@@ -1,0 +1,21 @@
+{
+  "title": "Agent Desk — Latency budget",
+  "uid": "latency",
+  "schemaVersion": 39,
+  "time": { "from": "now-30m", "to": "now" },
+  "refresh": "5s",
+  "panels": [
+    { "id": 1, "type": "timeseries", "title": "p95 time-to-first-token by channel (ms)", "gridPos": {"x":0,"y":0,"w":12,"h":8},
+      "datasource": {"type":"prometheus","uid":"prom"},
+      "targets": [{ "expr": "histogram_quantile(0.95, sum by (le, channel) (rate(agent_stage_ms_bucket{stage=\"llm_first_token_ms\"}[1m])))", "legendFormat": "{{channel}}" }] },
+    { "id": 2, "type": "timeseries", "title": "p95 end-to-end by channel (ms)", "gridPos": {"x":12,"y":0,"w":12,"h":8},
+      "datasource": {"type":"prometheus","uid":"prom"},
+      "targets": [{ "expr": "histogram_quantile(0.95, sum by (le, channel) (rate(agent_stage_ms_bucket{stage=\"end_to_end_ms\"}[1m])))", "legendFormat": "{{channel}}" }] },
+    { "id": 3, "type": "stat", "title": "Answer cache hits / min", "gridPos": {"x":0,"y":8,"w":8,"h":6},
+      "datasource": {"type":"prometheus","uid":"prom"},
+      "targets": [{ "expr": "sum(rate(agent_answer_cache_total{result=\"hit\"}[1m]))*60" }] },
+    { "id": 4, "type": "stat", "title": "Handoffs / min", "gridPos": {"x":8,"y":8,"w":8,"h":6},
+      "datasource": {"type":"prometheus","uid":"prom"},
+      "targets": [{ "expr": "sum(rate(agent_handoffs_total[1m]))*60" }] }
+  ]
+}
