@@ -9,6 +9,7 @@ class Llm::Bedrock
 
   def stream(system:, messages:, tools:, context: [], locale: "ja", &block)
     models = [ENV.fetch("BEDROCK_MODEL_ID"), ENV["BEDROCK_FALLBACK_MODEL_ID"].presence].compact
+    models.shift if models.size > 1 && @primary_down_until && Time.now < @primary_down_until # skip a model that just refused us
     models.each_with_index do |model_id, i|
       started = false
       begin
@@ -17,6 +18,7 @@ class Llm::Bedrock
       rescue *FALLBACK_ERRORS => e
         raise if started || i == models.size - 1
 
+        @primary_down_until = Time.now + 300
         Rails.logger.warn("bedrock model #{model_id} failed (#{e.class}); falling back to #{models[i + 1]}")
       end
     end
@@ -34,6 +36,7 @@ class Llm::Bedrock
     params[:tool_config] = { tools: tools } unless tools.empty?
 
     current = nil
+    filter = Llm::ThinkingFilter.new
     Telemetry.span("bedrock.converse_stream", model: model_id) do
       client.converse_stream(**params) do |events|
         events.on_content_block_start_event do |e|
@@ -42,12 +45,15 @@ class Llm::Bedrock
         end
         events.on_content_block_delta_event do |e|
           if e.delta.text
-            yield({ type: :token, text: e.delta.text })
+            visible = filter.push(e.delta.text)
+            yield({ type: :token, text: visible }) unless visible.empty?
           elsif e.delta.tool_use && current
             current[:json] << e.delta.tool_use.input.to_s
           end
         end
         events.on_content_block_stop_event do
+          tail = filter.flush
+          yield({ type: :token, text: tail }) unless tail.empty?
           if current
             input = current[:json].empty? ? {} : JSON.parse(current[:json])
             yield({ type: :tool_use, id: current[:id], name: current[:name], input: })
