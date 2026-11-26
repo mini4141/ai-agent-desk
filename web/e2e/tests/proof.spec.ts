@@ -51,7 +51,7 @@ test("voice and avatar", async ({ page }) => {
     const box = (await page.getByTestId("ptt").boundingBox())!;
     await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
     await page.mouse.down();
-    await page.waitForTimeout(1500);
+    await page.waitForTimeout(Number(process.env.HOLD_MS ?? 1500));
     await page.mouse.up();
   };
   await page.getByTestId("tab-voice_web").click();

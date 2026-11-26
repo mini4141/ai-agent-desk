@@ -25,7 +25,11 @@ export default defineConfig({
     permissions: ["microphone"],
     launchOptions: {
       // Fake microphone so hold-to-talk works headlessly (SPECS F4).
-      args: ["--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream", "--autoplay-policy=no-user-gesture-required"],
+      args: [
+        "--use-fake-device-for-media-stream", "--use-fake-ui-for-media-stream", "--autoplay-policy=no-user-gesture-required",
+        // Cloud runs feed a Polly-synthesised Japanese utterance to the fake microphone so Transcribe has real speech to hear.
+        ...(process.env.FAKE_AUDIO ? [`--use-file-for-fake-audio-capture=${process.env.FAKE_AUDIO}`] : []),
+      ],
     },
   },
   projects: [{ name: "chromium", use: { browserName: "chromium" } }],

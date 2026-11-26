@@ -26,7 +26,7 @@ variable "web_desired_count" {
 
 variable "bedrock_model_id" {
   type    = string
-  default = "au.anthropic.claude-haiku-5-5"
+  default = "au.anthropic.claude-haiku-4-5-20251001-v1:0"
 }
 
 variable "bedrock_embed_model_id" {

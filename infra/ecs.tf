@@ -129,7 +129,7 @@ resource "aws_ecs_service" "web" {
     container_port   = 3000
   }
 
-  depends_on = [aws_lb_listener_rule.web_api, aws_lb_listener_rule.web_cable]
+  depends_on = [aws_lb_listener_rule.web_api, aws_lb_listener_rule.web_cable, aws_secretsmanager_secret_version.app]
 
   lifecycle {
     ignore_changes = [task_definition] # application deploys (CI/OIDC or scripts/deploy.sh) roll new task definitions
@@ -182,6 +182,8 @@ resource "aws_ecs_service" "worker" {
     security_groups  = [aws_security_group.app.id]
     assign_public_ip = true
   }
+
+  depends_on = [aws_secretsmanager_secret_version.app]
 
   lifecycle {
     ignore_changes = [task_definition]
@@ -294,7 +296,7 @@ resource "aws_ecs_service" "company_backend" {
     container_port   = 4567
   }
 
-  depends_on = [aws_lb_listener_rule.backend]
+  depends_on = [aws_lb_listener_rule.backend, aws_secretsmanager_secret_version.app]
 
   lifecycle {
     ignore_changes = [task_definition]
