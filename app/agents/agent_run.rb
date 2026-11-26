@@ -139,9 +139,8 @@ class AgentRun
   end
 
   def escalate(reason, text)
-    @conversation.escalate!(reason)
     draft = draft_text(text)
-    @conversation.update_columns(draft_reply: draft)
+    @conversation.escalate!(reason, draft:) # status flip and AI draft land in one update
     @conversation.messages.create!(role: "ai", content: Escalation.handoff_message(@locale), metadata: { "handoff" => reason, "run_id" => @run_id })
     ConversationChannel.broadcast_ops(@conversation, { type: "draft", draft: draft })
   end

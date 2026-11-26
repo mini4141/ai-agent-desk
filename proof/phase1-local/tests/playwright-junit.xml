@@ -1,17 +1,17 @@
-<testsuites id="" name="" tests="10" failures="0" skipped="4" errors="0" time="25.30869">
-<testsuite name="chat-handoff.spec.ts" timestamp="2026-11-26T17:14:57.728Z" hostname="chromium" tests="1" failures="0" skipped="0" time="8.66" errors="0">
-<testcase name="web chat answers, escalates, operator takes over, resolves, and metrics update" classname="chat-handoff.spec.ts" time="8.66">
+<testsuites id="" name="" tests="10" failures="0" skipped="4" errors="0" time="32.311261">
+<testsuite name="chat-handoff.spec.ts" timestamp="2026-11-26T17:22:01.613Z" hostname="chromium" tests="1" failures="0" skipped="0" time="13.056" errors="0">
+<testcase name="web chat answers, escalates, operator takes over, resolves, and metrics update" classname="chat-handoff.spec.ts" time="13.056">
 </testcase>
 </testsuite>
-<testsuite name="phone-help.spec.ts" timestamp="2026-11-26T17:14:57.728Z" hostname="chromium" tests="3" failures="0" skipped="0" time="2.872" errors="0">
-<testcase name="phone simulator: a call completes one question and answer over mu-law frames" classname="phone-help.spec.ts" time="2.574">
+<testsuite name="phone-help.spec.ts" timestamp="2026-11-26T17:22:01.613Z" hostname="chromium" tests="3" failures="0" skipped="0" time="4.427" errors="0">
+<testcase name="phone simulator: a call completes one question and answer over mu-law frames" classname="phone-help.spec.ts" time="3.906">
 </testcase>
-<testcase name="help center is server-rendered: article text is in the HTML without JavaScript" classname="phone-help.spec.ts" time="0.137">
+<testcase name="help center is server-rendered: article text is in the HTML without JavaScript" classname="phone-help.spec.ts" time="0.229">
 </testcase>
-<testcase name="greeting_v2 assignment is sticky per visitor" classname="phone-help.spec.ts" time="0.161">
+<testcase name="greeting_v2 assignment is sticky per visitor" classname="phone-help.spec.ts" time="0.292">
 </testcase>
 </testsuite>
-<testsuite name="proof.spec.ts" timestamp="2026-11-26T17:14:57.728Z" hostname="chromium" tests="4" failures="0" skipped="4" time="0" errors="0">
+<testsuite name="proof.spec.ts" timestamp="2026-11-26T17:22:01.613Z" hostname="chromium" tests="4" failures="0" skipped="4" time="0" errors="0">
 <testcase name="chat, tool call and citation" classname="proof.spec.ts">
 <properties>
 <property name="serial" value="">
@@ -53,10 +53,10 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="voice-avatar.spec.ts" timestamp="2026-11-26T17:14:57.728Z" hostname="chromium" tests="2" failures="0" skipped="0" time="12.321" errors="0">
-<testcase name="voice: hold-to-talk (fake mic) gets a spoken reply" classname="voice-avatar.spec.ts" time="5.58">
+<testsuite name="voice-avatar.spec.ts" timestamp="2026-11-26T17:22:01.613Z" hostname="chromium" tests="2" failures="0" skipped="0" time="13.343" errors="0">
+<testcase name="voice: hold-to-talk (fake mic) gets a spoken reply" classname="voice-avatar.spec.ts" time="6.097">
 </testcase>
-<testcase name="avatar: speaks the answer and the interview fields are stored on the conversation" classname="voice-avatar.spec.ts" time="6.741">
+<testcase name="avatar: speaks the answer and the interview fields are stored on the conversation" classname="voice-avatar.spec.ts" time="7.246">
 </testcase>
 </testsuite>
 </testsuites>
