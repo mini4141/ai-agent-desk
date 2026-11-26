@@ -23,7 +23,7 @@ module Telemetry
 
   def timing(stage, ms, channel)
     STAGE_MS.observe(ms, labels: { stage: stage.to_s, channel: channel.to_s })
-    emf("Latency", stage.to_s => ms, dims: { Channel: channel.to_s }) if ENV["EMF"] == "1"
+    emf("Latency", { stage.to_s => ms }, dims: { Channel: channel.to_s }) if ENV["EMF"] == "1"
   end
 
   def cache(result)
