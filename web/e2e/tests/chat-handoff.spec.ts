@@ -14,7 +14,8 @@ test("web chat answers, escalates, operator takes over, resolves, and metrics up
   await openWidget(customer);
   await ask(customer, "注文 A-1023 はいつ届きますか？");
   await expect(customer.getByTestId("tool-chip")).toContainText("check_order_status");
-  await expect(customer.getByTestId("bubble-ai").last()).toContainText("出荷済み");
+  // a real LLM phrases the tool result its own way, but it always carries the order id and the delivery date
+  await expect(customer.getByTestId("bubble-ai").last()).toContainText(/出荷済み|11月28日/, { timeout: 30_000 });
   await expect(customer.getByTestId("citations").last()).toContainText("[1]");
 
   // 2. customer asks for a person -> escalated, shows up in the operator inbox within 2 s

@@ -29,7 +29,8 @@ class VoiceChannel < ApplicationCable::Channel
 
   private
 
-  def locale(data) = data["lang"].presence || @conversation.language || @conversation.company.locale
+  # The widget sends BCP-47 tags ("ja-JP"); providers use the two-letter locale ("ja").
+  def locale(data) = (data["lang"].presence || @conversation.language || @conversation.company.locale).to_s.first(2)
 
   def partial(text) = ConversationChannel.broadcast_to(@conversation, { type: "transcript", text:, final: false })
 end
