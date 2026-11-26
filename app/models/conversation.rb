@@ -15,8 +15,10 @@ class Conversation < ApplicationRecord
 
   after_commit :notify_changes
 
-  def escalate!(reason)
-    update!(status: "waiting_human", escalation_reason: reason, human_involved: true)
+  # The AI draft is stored in the same update as the status change, so an operator who opens the
+  # conversation as soon as it appears in the inbox always finds the draft already there.
+  def escalate!(reason, draft: nil)
+    update!(status: "waiting_human", escalation_reason: reason, human_involved: true, draft_reply: draft)
     Telemetry.handoff(reason)
   end
 

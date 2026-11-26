@@ -34,6 +34,8 @@ export function LiveTranscript({ conversationId, messages, onDraft }: Props) {
         setStreaming((s) => ({ ...s, [ev.run_id]: (s[ev.run_id] ?? "") + ev.text }));
       } else if (ev.type === "draft") {
         onDraft(ev.draft);
+      } else if (ev.type === "history") {
+        if (ev.draft) onDraft(ev.draft); // subscribed after the AI draft was written
       } else if (ev.type === "status") {
         void qc.invalidateQueries({ queryKey: key });
       }
