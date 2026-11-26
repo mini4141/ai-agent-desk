@@ -11,7 +11,8 @@ class PhoneStreamChannel < ApplicationCable::Channel
     @conversation = current_conversation
     return reject unless @conversation
 
-    stream_for @conversation
+    # Replies are rendered by PhoneSimAdapter onto the conversation stream.
+    stream_from ConversationChannel.broadcasting_for(@conversation)
   end
 
   def event(data)

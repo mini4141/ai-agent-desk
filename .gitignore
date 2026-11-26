@@ -23,3 +23,9 @@ vendor/bundle/
 # Ignore key files for decrypting credentials and more.
 /config/*.key
 
+public/widget.js
+public/widget.js.map
+web/help-center/AGENTS.md
+web/help-center/next-env.d.ts
+web/e2e/test-results/
+.playwright/

@@ -45,7 +45,7 @@ class AgentRun
     tool_intent = text.match?(Llm::Mock::ORDER_ID) || text.match?(/折り返し|callback/i)
     return escalate("low_confidence", text) if retrieval.confidence < Embedding.min_confidence && !tool_intent
 
-    chunks = retrieval.chunks.select { |c| 1 - c.neighbor_distance >= Embedding.min_confidence }.first(3)
+    chunks = retrieval.chunks.select { |c| 1 - c.neighbor_distance >= Embedding.min_confidence }.uniq(&:knowledge_source_id).first(3)
     answer, used_tool = run_llm(text, chunks)
     citations = citations_for(chunks)
     AnswerCache.write(@company.id, text, @locale, { "text" => answer, "citations" => citations }) unless used_tool

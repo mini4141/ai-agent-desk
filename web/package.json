@@ -1,0 +1,9 @@
+{
+  "name": "ai-agent-desk-web",
+  "private": true,
+  "scripts": {
+    "build:widget": "pnpm --filter widget build",
+    "lint": "pnpm -r --if-present lint",
+    "test": "pnpm -r --if-present test"
+  }
+}

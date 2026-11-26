@@ -12,8 +12,11 @@ class Message < ApplicationRecord
 
   private
 
+  # The inbox preview shows what the customer (or operator) last said, not the AI's canned replies.
   def refresh_conversation_summary
-    conversation.update_columns(last_message_at: created_at, last_message_preview: content.to_s.truncate(80))
+    attrs = { last_message_at: created_at }
+    attrs[:last_message_preview] = content.to_s.truncate(80) if from_customer? || from_operator?
+    conversation.update_columns(attrs)
   end
 
   def broadcast_created

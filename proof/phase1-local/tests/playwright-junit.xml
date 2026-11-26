@@ -1,0 +1,6 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="15.483948">
+<testsuite name="chat-handoff.spec.ts" timestamp="2026-11-26T13:34:26.061Z" hostname="chromium" tests="1" failures="0" skipped="0" time="13.134" errors="0">
+<testcase name="web chat answers, escalates, operator takes over, resolves, and metrics update" classname="chat-handoff.spec.ts" time="13.134">
+</testcase>
+</testsuite>
+</testsuites>

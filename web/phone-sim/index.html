@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Phone line simulator</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <main class="phone">
+      <h1>📞 Phone line simulator</h1>
+      <p class="hint">8 kHz μ-law audio over WebSocket, shaped like a Twilio Media Stream. No real phone numbers.</p>
+      <label>API <input id="api" value="http://localhost:3000" /></label>
+      <label>Company key <input id="key" value="pk_demo_mirai" /></label>
+      <label>Caller says (STT hint) <input id="hint" value="注文 A-1023 はいつ届きますか？" /></label>
+      <div class="buttons">
+        <button id="call" data-testid="call">Call</button>
+        <button id="talk" data-testid="talk" disabled>Hold to speak</button>
+        <button id="hangup" data-testid="hangup" disabled>Hang up</button>
+      </div>
+      <div id="state" data-testid="state" data-state="idle">idle</div>
+      <ul id="log" data-testid="log"></ul>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

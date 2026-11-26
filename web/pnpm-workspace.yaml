@@ -1,0 +1,6 @@
+packages:
+  - console
+  - widget
+  - phone-sim
+  - help-center
+  - e2e
