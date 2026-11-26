@@ -15,9 +15,9 @@ test("phone simulator: a call completes one question and answer over mu-law fram
   await page.waitForTimeout(Number(process.env.HOLD_MS ?? 1200));
   await page.mouse.up();
 
-  await expect(page.getByTestId("log")).toContainText(/caller: .*(注文|1023)/, { timeout: 30_000 });
+  await expect(page.getByTestId("log")).toContainText(new RegExp(`caller: .*(${process.env.VOICE_HEARD ?? "注文|1023"})`), { timeout: 30_000 });
   await expect(page.getByTestId("log")).toContainText("agent:", { timeout: 30_000 });
-  await expect(page.getByTestId("log")).toContainText("出荷済み");
+  await expect(page.getByTestId("log")).toContainText(process.env.VOICE_EXPECT ?? "出荷済み");
 
   const token = await apiToken("owner@mirai.example");
   const { conversations } = await apiGet<{ conversations: { channel: string }[] }>("/api/v1/conversations", token);

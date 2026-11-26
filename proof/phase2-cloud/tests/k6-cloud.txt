@@ -75,7 +75,8 @@
 
 
 
-TTFT ms  p50=424 p90=1811 p95=1883 max=1897  answers=22
 
-chat ✓ [ 100% ] 5 VUs  1m02.6s/1m10s  5/5 iters, 1 per VU
-time="2026-11-26T22:39:55+07:00" level=error msg="thresholds on metrics 'ttft_ms' have been crossed"
+TTFT ms  p50=1301 p90=1789 p95=1865 max=2377  answers=33
+
+chat ✓ [ 100% ] 5 VUs  1m03.8s/1m10s  5/5 iters, 1 per VU
+time="2026-11-26T22:51:10+07:00" level=error msg="thresholds on metrics 'ttft_ms' have been crossed"

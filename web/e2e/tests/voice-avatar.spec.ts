@@ -1,6 +1,10 @@
 import { expect, test } from "@playwright/test";
 import { apiGet, apiToken, ask, openWidget } from "./helpers";
 
+// Cloud runs use a Polly-synthesised utterance that real Transcribe hears; the expectations are overridable.
+const HEARD = new RegExp(process.env.VOICE_HEARD ?? "注文|A-?1023", "i");
+const ANSWER = process.env.VOICE_EXPECT ?? "出荷済み";
+
 async function holdToTalk(page: import("@playwright/test").Page, ms = Number(process.env.HOLD_MS ?? 1200)) {
   const ptt = page.getByTestId("ptt");
   const box = (await ptt.boundingBox())!;
@@ -22,9 +26,9 @@ test("voice: hold-to-talk (fake mic) gets a spoken reply", async ({ page }) => {
   await page.getByTestId("tab-voice_web").click();
   await expect(page.getByTestId("widget").locator(".dot.on")).toBeVisible();
   await holdToTalk(page);
-  await expect(page.getByTestId("bubble-customer").last()).toContainText(/注文|A-?1023/i, { timeout: 30_000 });
-  await expect(page.getByTestId("bubble-ai").last()).toContainText("出荷済み", { timeout: 30_000 });
-  await expect(page.getByTestId("spoken")).toContainText("出荷済み", { timeout: 30_000 });
+  await expect(page.getByTestId("bubble-customer").last()).toContainText(HEARD, { timeout: 30_000 });
+  await expect(page.getByTestId("bubble-ai").last()).toContainText(ANSWER, { timeout: 30_000 });
+  await expect(page.getByTestId("spoken")).toContainText(ANSWER, { timeout: 30_000 });
 });
 
 test("avatar: speaks the answer and the interview fields are stored on the conversation", async ({ page }) => {
@@ -33,7 +37,7 @@ test("avatar: speaks the answer and the interview fields are stored on the conve
   await expect(page.getByTestId("avatar")).toBeVisible();
   await expect(page.getByTestId("widget").locator(".dot.on")).toBeVisible();
   await holdToTalk(page);
-  await expect(page.getByTestId("spoken")).toContainText("出荷済み", { timeout: 30_000 });
+  await expect(page.getByTestId("spoken")).toContainText(ANSWER, { timeout: 30_000 });
 
   // interview mode: scripted 3-question intake
   await page.getByTestId("interview-toggle").click();

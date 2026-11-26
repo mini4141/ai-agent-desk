@@ -8,6 +8,7 @@ class Speech::Transcribe
     @on_partial = on_partial
     @sample_rate = sample_rate
     @finals = []
+    @last_partial = ""
     @started = false
   end
 
@@ -20,11 +21,15 @@ class Speech::Transcribe
     return @finals.join(" ").strip unless @started
 
     @input.signal_end_stream
-    @response.join
-    @finals.join(" ").strip
+    @response.join!
+    sleep(0.2) # let the event-stream thread deliver the last transcript event
+    transcript
   end
 
   private
+
+  # Final segments, plus a trailing partial if the stream closed before Transcribe finalised it.
+  def transcript = [*@finals, @last_partial].reject(&:empty?).join(" ").strip
 
   def start
     @started = true
@@ -35,9 +40,11 @@ class Speech::Transcribe
       event.transcript.results.each do |result|
         text = result.alternatives.first&.transcript.to_s
         if result.is_partial
+          @last_partial = text
           @on_partial&.call(text)
         else
           @finals << text
+          @last_partial = ""
         end
       end
     end

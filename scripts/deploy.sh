@@ -69,8 +69,8 @@ echo "== migrate + seed (one-off ECS task)"
 scripts/ecs-run-task.sh web "bin/rails db:prepare db:seed" | tee proof/phase2-cloud/logs/migrate-seed.log | tail -5
 
 cat > .local/cloud.env <<EOF
-export API_URL=http://$ALB
-export HELP_URL=http://$ALB
+export API_URL=https://$CF
+export HELP_URL=https://$CF
 export CONSOLE_URL=https://$CF
 export PHONE_URL=https://$CF/phone/index.html
 export SEED_PASSWORD=$($TF output -raw seed_password)

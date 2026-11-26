@@ -5,7 +5,7 @@ source "$(dirname "$0")/_common.sh"
 export AWS_PROFILE=ai-agent-desk-deployer AWS_REGION=ap-southeast-2 AWS_PAGER=""
 mkdir -p .local
 aws polly synthesize-speech --engine neural --voice-id Tomoko --language-code ja-JP --output-format pcm --sample-rate 16000 \
-  --text "注文 A-1023 はいつ届きますか？" .local/speech-ja.pcm >/dev/null
+  --text "${SPEECH_TEXT:-返品はできますか？}" .local/speech-ja.pcm >/dev/null
 node -e '
 const fs = require("fs");
 const pcm = fs.readFileSync(".local/speech-ja.pcm");
